@@ -246,6 +246,10 @@
         "server": "dns-remote"
       },
       {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
         "rule_set": "geoip-cn",
         "outbound": "direct"
       }
