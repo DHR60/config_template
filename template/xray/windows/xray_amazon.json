@@ -1,0 +1,366 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "dns": {
+        "hosts": {
+            "geosite:category-ads-all": "127.0.0.1",
+            "domain:googleapis.cn": "googleapis.com",
+            "dns.alidns.com": [
+                "223.5.5.5",
+                "223.6.6.6",
+                "2400:3200::1",
+                "2400:3200:baba::1"
+            ],
+            "one.one.one.one": [
+                "1.1.1.1",
+                "1.0.0.1",
+                "2606:4700:4700::1111",
+                "2606:4700:4700::1001"
+            ],
+            "1dot1dot1dot1.cloudflare-dns.com": [
+                "1.1.1.1",
+                "1.0.0.1",
+                "2606:4700:4700::1111",
+                "2606:4700:4700::1001"
+            ],
+            "cloudflare-dns.com": [
+                "104.16.249.249",
+                "104.16.248.249",
+                "2606:4700::6810:f8f9",
+                "2606:4700::6810:f9f9"
+            ],
+            "dns.cloudflare.com": [
+                "104.16.249.249",
+                "104.16.248.249",
+                "2606:4700::6810:f8f9",
+                "2606:4700::6810:f9f9"
+            ],
+            "dot.pub": [
+                "1.12.12.12",
+                "120.53.53.53"
+            ],
+            "dns.google": [
+                "8.8.8.8",
+                "8.8.4.4",
+                "2001:4860:4860::8888",
+                "2001:4860:4860::8844"
+            ],
+            "dns.quad9.net": [
+                "9.9.9.9",
+                "149.112.112.112",
+                "2620:fe::fe",
+                "2620:fe::9"
+            ],
+            "dns.yandex.net": [
+                "77.88.8.8",
+                "77.88.8.1",
+                "2a02:6b8::feed:0ff",
+                "2a02:6b8:0:1::feed:0ff"
+            ],
+            "dns.sb": [
+                "185.222.222.222",
+                "2a09::"
+            ],
+            "dns.umbrella.com": [
+                "208.67.220.220",
+                "208.67.222.222",
+                "2620:119:35::35",
+                "2620:119:53::53"
+            ],
+            "dns.sse.cisco.com": [
+                "208.67.220.220",
+                "208.67.222.222",
+                "2620:119:35::35",
+                "2620:119:53::53"
+            ],
+            "engage.cloudflareclient.com": [
+                "162.159.192.1",
+                "2606:4700:d0::a29f:c001"
+            ]
+        },
+        "servers": [
+            {
+                "address": "https://cloudflare-dns.com/dns-query",
+                "skipFallback": true,
+                "domains": [
+                    "domain:bing.com",
+                    "domain:googleapis.cn",
+                    "domain:gstatic.com"
+                ]
+            },
+            {
+                "address": "localhost",
+                "skipFallback": true,
+                "domains": [
+                    "domain:senhewenhua.com",
+                    "domain:cnmdm.top",
+                    "domain:akamaized.net",
+                    "domain:moedot.net",
+                    "domain:cycani.org",
+                    "domain:skland.com",
+                    "domain:aliyun.com",
+                    "domain:online-fix.me",
+                    "geosite:cn",
+                    "geosite:category-games@cn"
+                ],
+                "expectIPs": [
+                    "geoip:cn"
+                ]
+            },
+            "https://cloudflare-dns.com/dns-query",
+            "https://dns.google/dns-query",
+            "https://dns.sb/dns-query",
+            "https://dns.sse.cisco.com/dns-query"
+        ]
+    },
+    "inbounds": [
+        {
+            "tag": "socks",
+            "port": 20808,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ],
+                "routeOnly": false
+            },
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "allowTransparent": false
+            }
+        },
+        {
+            "tag": "socks3",
+            "port": 20810,
+            "listen": "0.0.0.0",
+            "protocol": "socks",
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ],
+                "routeOnly": false
+            },
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "allowTransparent": false
+            }
+        },
+        {
+            "tag": "api",
+            "port": 20812,
+            "listen": "127.0.0.1",
+            "protocol": "dokodemo-door",
+            "settings": {
+                "address": "127.0.0.1"
+            }
+        }
+    ],
+    "outbounds": [
+    ],
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "inboundTag": [
+                    "api"
+                ],
+                "outboundTag": "api"
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "domain:cycani.org"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "domain:senhewenhua.com",
+                    "domain:cnmdm.top",
+                    "domain:akamaized.net",
+                    "domain:moedot.net"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "domain:skland.com",
+                    "domain:aliyun.com",
+                    "domain:online-fix.me",
+                    "geosite:category-games@cn"
+                ]
+            },
+            {
+                "type": "field",
+                "balancerTag": "proxy-round",
+                "domain": [
+                    "domain:bing.com"
+                ]
+            },
+            {
+                "type": "field",
+                "balancerTag": "proxy-round",
+                "domain": [
+                    "domain:googleapis.cn",
+                    "domain:gstatic.com"
+                ]
+            },
+            {
+                "type": "field",
+                "balancerTag": "proxy-round",
+                "domain": [
+                    "cloudflare-dns.com",
+                    "1dot1dot1dot1.cloudflare-dns.com",
+                    "dns.google",
+                    "dns.quad9.net",
+                    "dns.sb",
+                    "dns.umbrella.com",
+                    "dns.sse.cisco.com",
+                    "dns.yandex.net"
+                ]
+            },
+            {
+                "type": "field",
+                "port": "443",
+                "network": "udp",
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "outboundTag": "block",
+                "domain": [
+                    "geosite:category-ads-all"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "geoip:private"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "geosite:private"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "223.5.5.5",
+                    "223.6.6.6",
+                    "2400:3200::1",
+                    "2400:3200:baba::1",
+                    "119.29.29.29",
+                    "1.12.12.12",
+                    "120.53.53.53",
+                    "2402:4e00::",
+                    "2402:4e00:1::",
+                    "180.76.76.76",
+                    "2400:da00::6666",
+                    "114.114.114.114",
+                    "114.114.115.115",
+                    "114.114.114.119",
+                    "114.114.115.119",
+                    "114.114.114.110",
+                    "114.114.115.110",
+                    "180.184.1.1",
+                    "180.184.2.2",
+                    "101.226.4.6",
+                    "218.30.118.6",
+                    "123.125.81.6",
+                    "140.207.198.6",
+                    "1.2.4.8",
+                    "210.2.4.8",
+                    "52.80.66.66",
+                    "117.50.22.22",
+                    "2400:7fc0:849e:200::4",
+                    "2404:c2c0:85d8:901::4",
+                    "117.50.10.10",
+                    "52.80.52.52",
+                    "2400:7fc0:849e:200::8",
+                    "2404:c2c0:85d8:901::8",
+                    "117.50.60.30",
+                    "52.80.60.30"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "alidns.com",
+                    "doh.pub",
+                    "dot.pub",
+                    "360.cn",
+                    "onedns.net"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "geoip:cn"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "geosite:cn"
+                ]
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "0.0.0.0/0",
+                    "::/0"
+                ],
+                "balancerTag": "proxy-round"
+            }
+        ],
+        "balancers": [
+            {
+                "selector": [
+                    "proxy"
+                ],
+                "strategy": {
+                    "type": "leastLoad"
+                },
+                "tag": "proxy-round"
+            }
+        ]
+    },
+    "observatory": {
+        "subjectSelector": [
+            "proxy"
+        ],
+        "probeUrl": "https://www.google.com/generate_204",
+        "probeInterval": "1m",
+        "enableConcurrency": false
+    },
+    "policy": {
+        "system": {
+            "statsOutboundUplink": true,
+            "statsOutboundDownlink": true
+        }
+    },
+    "metrics": {
+        "tag": "api"
+    },
+    "stats": {}
+}

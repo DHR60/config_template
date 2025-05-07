@@ -1,0 +1,73 @@
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns-remote",
+        "type": "udp",
+        "server": "1.1.1.1",
+        "domain_resolver": "dns-local",
+        "detour": "proxy"
+      },
+      {
+        "tag": "dns-local",
+        "type": "dhcp"
+      }
+    ],
+    "final": "dns-remote",
+    "independent_cache": false
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 20808
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in2",
+      "listen": "::",
+      "listen_port": 20810
+    }
+  ],
+  "outbounds": [],
+  "route": {
+    "default_domain_resolver": {
+      "server": "dns-local"
+    },
+    "rules": [
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "geosite-private",
+        "outbound": "direct"
+      }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "geosite-private",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      }
+    ],
+    "final": "proxy"
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "D:\\Software\\v2rayN\\bin\\cache.db"
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:20813"
+    }
+  }
+}
