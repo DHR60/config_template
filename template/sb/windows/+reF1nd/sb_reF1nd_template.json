@@ -222,7 +222,7 @@
         "tag": "geosite-category-games",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\geosite-category-games.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-category-games.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
@@ -231,7 +231,7 @@
         "tag": "geosite-category-ads-all",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-ads-all.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\geosite-category-ads-all.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-category-ads-all.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
@@ -240,7 +240,7 @@
         "tag": "geosite-private",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\geosite-private.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-private.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
@@ -249,7 +249,7 @@
         "tag": "geosite-cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\geosite-cn.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-cn.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
@@ -258,7 +258,7 @@
         "tag": "geoip-cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\geoip-cn.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geoip-cn.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
@@ -267,12 +267,12 @@
         "tag": "geoip-telegram",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\geoip-telegram.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geoip-telegram.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
     ],
-    "final": "proxy"
+    "final": "direct"
   },
   "experimental": {
     "cache_file": {
