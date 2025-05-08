@@ -46,6 +46,7 @@
         "server": "dns-remote"
       },
       {
+        "clash_mode": "GameDirect",
         "rule_set": [
           "geosite-category-games"
         ],
@@ -187,6 +188,7 @@
         "outbound": "direct"
       },
       {
+        "clash_mode": "GameDirect",
         "rule_set": [
           "geosite-category-games"
         ],
@@ -269,7 +271,10 @@
       "path": "D:\\Software\\v2rayN\\bin\\cache.db"
     },
     "clash_api": {
-      "external_controller": "127.0.0.1:20813"
+      "external_controller": "127.0.0.1:20813",
+      "external_ui": "D:\\Software\\v2rayN\\bin\\ui",
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
+      "external_ui_download_detour": "proxy"
     }
   }
 }
