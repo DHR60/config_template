@@ -125,6 +125,12 @@
         "action": "hijack-dns"
       },
       {
+        "action": "sniff-override-destination"
+      },
+      {
+        "action": "resolve"
+      },
+      {
         "ip_is_private": true,
         "outbound": "direct"
       },
@@ -139,9 +145,6 @@
       {
         "outbound": "direct",
         "clash_mode": "Direct"
-      },
-      {
-        "action": "resolve"
       },
       {
         "type": "logical",
@@ -212,6 +215,9 @@
         "rule_set": "geoip-cn",
         "invert": true,
         "outbound": "proxy"
+      },
+      {
+        "action": "sniff-override-destination"
       },
       {
         "action": "resolve",
