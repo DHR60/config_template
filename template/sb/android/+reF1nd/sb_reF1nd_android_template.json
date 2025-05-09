@@ -64,7 +64,17 @@
         "disable_cache": true
       },
       {
-        "rule_set": "geosite-category-ads-all",
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "clash_mode": "AllowAds",
+            "invert": true
+          },
+          {
+            "rule_set": "geosite-category-ads-all"
+          }
+        ],
         "action": "predefined",
         "rcode": "NOERROR",
         "answer": "A"
@@ -218,7 +228,17 @@
         "method": "default"
       },
       {
-        "rule_set": "geosite-category-ads-all",
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "clash_mode": "AllowAds",
+            "invert": true
+          },
+          {
+            "rule_set": "geosite-category-ads-all"
+          }
+        ],
         "action": "reject",
         "method": "default"
       },
