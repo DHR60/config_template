@@ -207,10 +207,6 @@
         "outbound": "proxy"
       },
       {
-        "ip_is_private": true,
-        "outbound": "direct"
-      },
-      {
         "clash_mode": "GameDirect",
         "rule_set": [
           "geosite-category-games"
@@ -232,7 +228,16 @@
         "outbound": "direct"
       },
       {
-        "rule_set": "geoip-cn",
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "rule_set": "geoip-cn"
+          },
+          {
+            "ip_is_private": true
+          }
+        ],
         "invert": true,
         "outbound": "proxy"
       },
