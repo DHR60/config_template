@@ -135,6 +135,20 @@
             }
         },
         {
+            "tag": "socks2",
+            "port": 20809,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "sniffing": {
+                "enabled": false
+            },
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "allowTransparent": false
+            }
+        },
+        {
             "tag": "socks3",
             "port": 20810,
             "listen": "0.0.0.0",
@@ -163,8 +177,7 @@
             }
         }
     ],
-    "outbounds": [
-    ],
+    "outbounds": [],
     "routing": {
         "domainStrategy": "IPIfNonMatch",
         "rules": [
@@ -174,6 +187,13 @@
                     "api"
                 ],
                 "outboundTag": "api"
+            },
+            {
+                "type": "field",
+                "inboundTag": [
+                    "socks2"
+                ],
+                "balancerTag": "proxy-round"
             },
             {
                 "type": "field",

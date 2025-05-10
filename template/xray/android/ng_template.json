@@ -151,14 +151,26 @@
             },
             "sniffing": {
                 "destOverride": [
-                    "http",
-                    "tls",
                     "fakedns"
                 ],
                 "enabled": true,
                 "routeOnly": false
             },
             "tag": "socks"
+        },
+        {
+            "listen": "127.0.0.1",
+            "port": 20809,
+            "protocol": "socks",
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "userLevel": 8
+            },
+            "sniffing": {
+                "enabled": false
+            },
+            "tag": "socks2"
         },
         {
             "listen": "127.0.0.1",
@@ -199,6 +211,13 @@
                 ],
                 "outboundTag": "dns-out",
                 "type": "field"
+            },
+            {
+                "type": "field",
+                "inboundTag": [
+                    "socks2"
+                ],
+                "balancerTag": "proxy-round"
             },
             {
                 "type": "field",

@@ -29,7 +29,7 @@
     },
     {
       "type": "mixed",
-      "tag": "mixed-in2",
+      "tag": "mixed-in3",
       "listen": "::",
       "listen_port": 20810
     }

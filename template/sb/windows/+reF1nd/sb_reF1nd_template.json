@@ -92,6 +92,12 @@
     {
       "type": "mixed",
       "tag": "mixed-in2",
+      "listen": "127.0.0.1",
+      "listen_port": 20809
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in3",
       "listen": "::",
       "listen_port": 20810
     }
@@ -102,6 +108,12 @@
       "server": "dns-local"
     },
     "rules": [
+      {
+        "inbound": [
+          "mixed-in2"
+        ],
+        "outbound": "proxy"
+      },
       {
         "rule_set": "geoip-telegram",
         "clash_mode": "Direct",
