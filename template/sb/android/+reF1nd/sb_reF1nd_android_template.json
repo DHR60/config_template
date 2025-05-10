@@ -182,9 +182,6 @@
         "action": "hijack-dns"
       },
       {
-        "action": "sniff-override-destination"
-      },
-      {
         "ip_is_private": true,
         "outbound": "direct"
       },
@@ -281,9 +278,6 @@
         ],
         "invert": true,
         "outbound": "proxy"
-      },
-      {
-        "action": "sniff-override-destination"
       },
       {
         "action": "resolve",

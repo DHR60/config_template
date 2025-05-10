@@ -242,9 +242,6 @@
         "outbound": "proxy"
       },
       {
-        "action": "sniff-override-destination"
-      },
-      {
         "action": "resolve",
         "server": "dns-local"
       }
