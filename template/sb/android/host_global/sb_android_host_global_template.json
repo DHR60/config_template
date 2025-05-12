@@ -62,6 +62,12 @@
       "tag": "mixed-in",
       "listen": "127.0.0.1",
       "listen_port": 20808
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in2",
+      "listen": "127.0.0.1",
+      "listen_port": 20809
     }
   ],
   "outbounds": [],
@@ -70,6 +76,12 @@
       "server": "dns-local"
     },
     "rules": [
+      {
+        "inbound": [
+          "mixed-in2"
+        ],
+        "outbound": "proxy"
+      },
       {
         "ip_is_private": true,
         "outbound": "direct"

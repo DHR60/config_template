@@ -1,0 +1,465 @@
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns-remote",
+        "type": "https",
+        "server": "cloudflare-dns.com",
+        "domain_resolver": "dns-local",
+        "detour": "proxy"
+      },
+      {
+        "tag": "dns-local",
+        "type": "dhcp"
+      },
+      {
+        "tag": "dns-fake",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      }
+    ],
+    "rules": [
+      {
+        "clash_mode": "Direct",
+        "server": "dns-local"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "dns-remote"
+      },
+      {
+        "query_type": [
+          64,
+          65
+        ],
+        "action": "route-options",
+        "disable_cache": true
+      },
+      {
+        "query_type": [
+          64,
+          65
+        ],
+        "action": "predefined",
+        "rcode": "NOTIMP"
+      },
+      {
+        "query_type": "HTTPS",
+        "action": "reject"
+      },
+      {
+        "rule_set": "geosite-category-ads-all",
+        "action": "route-options",
+        "disable_cache": true
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "clash_mode": "AllowAds",
+            "invert": true
+          },
+          {
+            "rule_set": "geosite-category-ads-all"
+          }
+        ],
+        "action": "predefined",
+        "rcode": "NOERROR",
+        "answer": "A"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "action": "route",
+        "server": "dns-fake",
+        "rewrite_ttl": 1
+      },
+      {
+        "domain_suffix": [
+          "bing.com",
+          "googleapis.cn",
+          "gstatic.com"
+        ],
+        "server": "dns-remote"
+      },
+      {
+        "domain_suffix": [
+          "senhewenhua.com",
+          "cnmdm.top",
+          "akamaized.net",
+          "moedot.net",
+          "cycani.org",
+          "skland.com",
+          "aliyun.com",
+          "online-fix.me"
+        ],
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "server": "dns-local"
+      }
+    ],
+    "final": "dns-remote",
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 20808
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in2",
+      "listen": "127.0.0.1",
+      "listen_port": 20809
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in3",
+      "listen": "::",
+      "listen_port": 20810
+    },
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "singbox_tun",
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "route_address": [
+        "0.0.0.0/0",
+        "::/0"
+      ],
+      "route_exclude_address": [
+        "192.168.0.0/16",
+        "fc00::/7",
+        "fe80::/10"
+      ],
+      "mtu": 9000,
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "mixed"
+    }
+  ],
+  "outbounds": [],
+  "route": {
+    "default_domain_resolver": {
+      "server": "dns-local"
+    },
+    "rules": [
+      {
+        "inbound": [
+          "mixed-in2"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "network": [
+          "udp"
+        ],
+        "port": [
+          135,
+          137,
+          138,
+          139,
+          5353
+        ],
+        "action": "reject"
+      },
+      {
+        "ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "action": "reject"
+      },
+      {
+        "port": [
+          53
+        ],
+        "process_name": [
+          "v2ray.exe",
+          "v2ray.exe",
+          "xray.exe",
+          "mihomo-windows-amd64-compatible.exe",
+          "mihomo-windows-amd64.exe",
+          "mihomo-linux-amd64.exe",
+          "clash.exe",
+          "mihomo.exe",
+          "hysteria.exe",
+          "naive.exe",
+          "naiveproxy.exe",
+          "tuic-client.exe",
+          "tuic.exe",
+          "juicity-client.exe",
+          "juicity.exe",
+          "hysteria-windows-amd64.exe",
+          "hysteria-linux-amd64.exe",
+          "hysteria.exe",
+          "brook_windows_amd64.exe",
+          "brook_linux_amd64.exe",
+          "brook.exe",
+          "overtls-bin.exe",
+          "overtls.exe"
+        ],
+        "action": "hijack-dns"
+      },
+      {
+        "outbound": "direct",
+        "process_name": [
+          "v2ray.exe",
+          "v2ray.exe",
+          "xray.exe",
+          "mihomo-windows-amd64-compatible.exe",
+          "mihomo-windows-amd64.exe",
+          "mihomo-linux-amd64.exe",
+          "clash.exe",
+          "mihomo.exe",
+          "hysteria.exe",
+          "naive.exe",
+          "naiveproxy.exe",
+          "tuic-client.exe",
+          "tuic.exe",
+          "sing-box-client.exe",
+          "sing-box.exe",
+          "juicity-client.exe",
+          "juicity.exe",
+          "hysteria-windows-amd64.exe",
+          "hysteria-linux-amd64.exe",
+          "hysteria.exe",
+          "brook_windows_amd64.exe",
+          "brook_linux_amd64.exe",
+          "brook.exe",
+          "overtls-bin.exe",
+          "overtls.exe"
+        ]
+      },
+      {
+        "rule_set": "geoip-telegram",
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "geoip-telegram",
+        "outbound": "proxy"
+      },
+      {
+        "action": "sniff",
+        "sniffer": [
+          "http",
+          "tls",
+          "quic",
+          "dns",
+          "bittorrent"
+        ],
+        "timeout": "500ms"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "bittorrent"
+          }
+        ],
+        "outbound": "direct"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 53
+          },
+          {
+            "protocol": "dns"
+          }
+        ],
+        "action": "hijack-dns"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "geosite-private",
+        "outbound": "direct"
+      },
+      {
+        "outbound": "proxy",
+        "clash_mode": "Global"
+      },
+      {
+        "outbound": "direct",
+        "clash_mode": "Direct"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "quic"
+          },
+          {
+            "network": "udp",
+            "port": 443
+          }
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "source_ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "clash_mode": "AllowAds",
+            "invert": true
+          },
+          {
+            "rule_set": "geosite-category-ads-all"
+          }
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "domain_suffix": [
+          "bing.com",
+          "googleapis.cn",
+          "gstatic.com"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "domain_suffix": [
+          "cycani.org",
+          "senhewenhua.com",
+          "cnmdm.top",
+          "akamaized.net",
+          "moedot.net",
+          "skland.com",
+          "aliyun.com",
+          "online-fix.me"
+        ],
+        "rule_set": "geosite-cn",
+        "outbound": "direct"
+      },
+      {
+        "action": "resolve",
+        "server": "dns-remote"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "rule_set": "geoip-cn"
+          },
+          {
+            "ip_is_private": true
+          }
+        ],
+        "invert": true,
+        "outbound": "proxy"
+      },
+      {
+        "action": "resolve",
+        "server": "dns-local"
+      }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "geosite-category-games",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-category-games.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-category-ads-all",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-ads-all.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-category-ads-all.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-private",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-private.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-cn.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geoip-cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geoip-cn.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geoip-telegram",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geoip-telegram.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      }
+    ],
+    "final": "direct",
+    "auto_detect_interface": true
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "D:\\Software\\v2rayN\\bin\\cache.db"
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:20813",
+      "external_ui": "D:\\Software\\v2rayN\\bin\\ui",
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
+      "external_ui_download_detour": "proxy"
+    }
+  }
+}
