@@ -227,7 +227,9 @@
           "brook_linux_amd64.exe",
           "brook.exe",
           "overtls-bin.exe",
-          "overtls.exe"
+          "overtls.exe",
+          "utorrent.exe",
+          "qbittorrent.exe"
         ]
       },
       {
@@ -338,6 +340,13 @@
           "gstatic.com"
         ],
         "outbound": "proxy"
+      },
+      {
+        "clash_mode": "GameDirect",
+        "rule_set": [
+          "geosite-category-games"
+        ],
+        "outbound": "direct"
       },
       {
         "domain_suffix": [
