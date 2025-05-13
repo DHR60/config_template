@@ -76,6 +76,13 @@
         "server": "dns-remote"
       },
       {
+        "clash_mode": "GameDirect",
+        "rule_set": [
+          "geosite-category-games"
+        ],
+        "server": "dns-local"
+      },
+      {
         "domain_suffix": [
           "senhewenhua.com",
           "cnmdm.top",
