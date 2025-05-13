@@ -469,7 +469,8 @@
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "path": "D:\\Software\\v2rayN\\bin\\cache.db"
+      "path": "D:\\Software\\v2rayN\\bin\\cache.db",
+      "store_fakeip": true
     },
     "clash_api": {
       "external_controller": "127.0.0.1:20813",
