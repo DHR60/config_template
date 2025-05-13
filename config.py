@@ -46,6 +46,10 @@ def merge_config_with_template(
     if "remarks" in config_data:
         result_data["remarks"] = config_data["remarks"]
 
+    # 保留配置文件中的providers字段（如果存在）
+    if "providers" in config_data:
+        result_data["providers"] = config_data["providers"]
+
     # 将配置文件的outbounds字段复制到结果中
     result_data["outbounds"] = config_data["outbounds"]
 
