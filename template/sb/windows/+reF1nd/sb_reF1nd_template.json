@@ -27,11 +27,6 @@
         "server": "dns-remote"
       },
       {
-        "rule_set": "geosite-category-ads-all",
-        "action": "route-options",
-        "disable_cache": true
-      },
-      {
         "type": "logical",
         "mode": "and",
         "rules": [

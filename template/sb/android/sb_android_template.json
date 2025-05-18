@@ -43,25 +43,12 @@
           64,
           65
         ],
-        "action": "route-options",
-        "disable_cache": true
-      },
-      {
-        "query_type": [
-          64,
-          65
-        ],
         "action": "predefined",
         "rcode": "NOTIMP"
       },
       {
         "query_type": "HTTPS",
         "action": "reject"
-      },
-      {
-        "rule_set": "geosite-category-ads-all",
-        "action": "route-options",
-        "disable_cache": true
       },
       {
         "type": "logical",
