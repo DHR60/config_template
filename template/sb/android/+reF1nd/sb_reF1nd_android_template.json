@@ -261,6 +261,10 @@
         "outbound": "direct"
       },
       {
+        "rule_set": "geosite-geolocation-!cn",
+        "outbound": "proxy"
+      },
+      {
         "action": "resolve",
         "server": "dns-remote"
       },
@@ -326,6 +330,15 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
         "path": "geoip-telegram.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-geolocation-!cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-geolocation-!cn.srs",
+        "path": "geosite-geolocation-!cn.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
