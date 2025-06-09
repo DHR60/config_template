@@ -23,6 +23,11 @@
         "type": "local"
       },
       {
+        "tag": "dns-op",
+        "type": "udp",
+        "server": "192.168.100.1"
+      },
+      {
         "tag": "dns-fake",
         "type": "fakeip",
         "inet4_range": "198.18.0.0/15",
@@ -33,6 +38,10 @@
       {
         "clash_mode": "Direct",
         "server": "dns-direct"
+      },
+      {
+        "clash_mode": "Coexist",
+        "server": "dns-op"
       },
       {
         "clash_mode": "Global",
@@ -168,6 +177,10 @@
     },
     "rules": [
       {
+        "clash_mode": "Coexist",
+        "outbound": "op-host"
+      },
+      {
         "inbound": [
           "mixed-in2"
         ],
@@ -294,12 +307,22 @@
         "server": "dns-remote"
       },
       {
-        "ip_is_private": true,
-        "outbound": "direct"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "rule_set": "geoip-cn"
+          },
+          {
+            "ip_is_private": true
+          }
+        ],
+        "invert": true,
+        "outbound": "proxy"
       },
       {
-        "rule_set": "geoip-cn",
-        "outbound": "direct"
+        "action": "resolve",
+        "server": "dns-direct"
       }
     ],
     "rule_set": [
@@ -307,60 +330,67 @@
         "type": "remote",
         "tag": "geosite-category-ads-all",
         "format": "binary",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-ads-all.srs",
-        "download_detour": "direct",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-ads-all.srs",
+        "path": "geosite-category-ads-all.srs",
+        "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
       {
         "type": "remote",
         "tag": "geosite-private",
         "format": "binary",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
-        "download_detour": "direct",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
+        "path": "geosite-private.srs",
+        "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
       {
         "type": "remote",
         "tag": "geosite-cn",
         "format": "binary",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
-        "download_detour": "direct",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
+        "path": "geosite-cn.srs",
+        "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
       {
         "type": "remote",
         "tag": "geoip-cn",
         "format": "binary",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs",
-        "download_detour": "direct",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs",
+        "path": "geoip-cn.srs",
+        "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
       {
         "type": "remote",
         "tag": "geoip-telegram",
         "format": "binary",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
-        "download_detour": "direct",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
+        "path": "geoip-telegram.srs",
+        "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
       {
         "type": "remote",
         "tag": "geosite-geolocation-!cn",
         "format": "binary",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-geolocation-!cn.srs",
-        "download_detour": "direct",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-geolocation-!cn.srs",
+        "path": "geosite-geolocation-!cn.srs",
+        "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
       {
         "type": "remote",
         "tag": "geosite-category-games",
         "format": "binary",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
+        "path": "geosite-category-games.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
     ],
-    "final": "proxy",
+    "final": "direct",
     "auto_detect_interface": true
   },
   "experimental": {
@@ -372,8 +402,8 @@
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
       "external_ui": "ui",
-      "external_ui_download_url": "https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "direct"
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
+      "external_ui_download_detour": "proxy"
     }
   }
 }

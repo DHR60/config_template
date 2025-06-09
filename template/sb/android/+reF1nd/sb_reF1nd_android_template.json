@@ -36,6 +36,16 @@
       },
       {
         "clash_mode": "Global",
+        "rule_set": [
+          "geosite-category-games"
+        ],
+        "domain_suffix": [
+          "xiaomi.com"
+        ],
+        "server": "dns-remote"
+      },
+      {
+        "clash_mode": "Global",
         "server": "dns-fake"
       },
       {
@@ -67,9 +77,24 @@
         "answer": "A"
       },
       {
-        "query_type": [
-          "A",
-          "AAAA"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "query_type": [
+              "A",
+              "AAAA"
+            ]
+          },
+          {
+            "rule_set": [
+              "geosite-category-games"
+            ],
+            "domain_suffix": [
+              "xiaomi.com"
+            ],
+            "invert": true
+          }
         ],
         "action": "route",
         "server": "dns-fake",
@@ -339,6 +364,15 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-geolocation-!cn.srs",
         "path": "geosite-geolocation-!cn.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-category-games",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
+        "path": "geosite-category-games.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
