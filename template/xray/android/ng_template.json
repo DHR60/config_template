@@ -28,10 +28,10 @@
                 "2606:4700::6810:f9f9"
             ],
             "dns.cloudflare.com": [
-                "104.16.249.249",
-                "104.16.248.249",
-                "2606:4700::6810:f8f9",
-                "2606:4700::6810:f9f9"
+                "104.16.132.229",
+                "104.16.133.229",
+                "2606:4700::6810:84e5",
+                "2606:4700::6810:85e5"
             ],
             "dot.pub": [
                 "1.12.12.12",
@@ -389,13 +389,16 @@
             }
         ]
     },
-    "observatory": {
+    "burstObservatory": {
         "subjectSelector": [
             "proxy"
         ],
-        "probeUrl": "https://www.google.com/generate_204",
-        "probeInterval": "1m",
-        "enableConcurrency": false
+        "pingConfig": {
+            "destination": "https://www.google.com/generate_204",
+            "interval": "5m",
+            "sampling": 2,
+            "timeout": "30s"
+        }
     },
     "stats": {}
 }
