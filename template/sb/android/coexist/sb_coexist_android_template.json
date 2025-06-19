@@ -45,17 +45,7 @@
       },
       {
         "clash_mode": "Global",
-        "rule_set": [
-          "geosite-category-games"
-        ],
-        "domain_suffix": [
-          "xiaomi.com"
-        ],
         "server": "dns-remote"
-      },
-      {
-        "clash_mode": "Global",
-        "server": "dns-fake"
       },
       {
         "query_type": [
@@ -97,7 +87,7 @@
           },
           {
             "rule_set": [
-              "geosite-category-games"
+              "geosite-fake-filter"
             ],
             "domain_suffix": [
               "xiaomi.com"
@@ -386,6 +376,15 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
         "path": "geosite-category-games.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-fake-filter",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/fakeip-filter.srs",
+        "path": "eosite-fake-filter.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }

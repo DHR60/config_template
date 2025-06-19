@@ -61,9 +61,24 @@
         "answer": "A"
       },
       {
-        "query_type": [
-          "A",
-          "AAAA"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "query_type": [
+              "A",
+              "AAAA"
+            ]
+          },
+          {
+            "rule_set": [
+              "geosite-fake-filter"
+            ],
+            "domain_suffix": [
+              "xiaomi.com"
+            ],
+            "invert": true
+          }
         ],
         "action": "route",
         "server": "dns-fake",
@@ -459,6 +474,15 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-geolocation-!cn.srs",
         "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-geolocation-!cn.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-fake-filter",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/fakeip-filter.srs",
+        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-fake-filter.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
