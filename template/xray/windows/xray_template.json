@@ -93,6 +93,17 @@
                 "address": "localhost",
                 "skipFallback": true,
                 "domains": [
+                    "geosite:cn"
+                ],
+                "expectIPs": [
+                    "geoip:cn"
+                ],
+                "tag": "domestic-dns-1"
+            },
+            {
+                "address": "localhost",
+                "skipFallback": true,
+                "domains": [
                     "domain:senhewenhua.com",
                     "domain:cnmdm.top",
                     "domain:akamaized.net",
@@ -101,18 +112,16 @@
                     "domain:skland.com",
                     "domain:aliyun.com",
                     "domain:online-fix.me",
-                    "geosite:cn",
                     "geosite:category-games@cn"
                 ],
-                "expectIPs": [
-                    "geoip:cn"
-                ]
+                "tag": "domestic-dns-2"
             },
             "https://cloudflare-dns.com/dns-query",
             "https://dns.google/dns-query",
             "https://dns.sb/dns-query",
             "https://dns.sse.cisco.com/dns-query"
-        ]
+        ],
+        "tag": "dns-module"
     },
     "inbounds": [
         {
@@ -192,6 +201,21 @@
                 "type": "field",
                 "inboundTag": [
                     "socks2"
+                ],
+                "balancerTag": "proxy-round"
+            },
+            {
+                "type": "field",
+                "inboundTag": [
+                    "domestic-dns-1",
+                    "domestic-dns-2"
+                ],
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "inboundTag": [
+                    "dns-module"
                 ],
                 "balancerTag": "proxy-round"
             },

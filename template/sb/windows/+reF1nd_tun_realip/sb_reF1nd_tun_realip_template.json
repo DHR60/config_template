@@ -35,10 +35,6 @@
         "rcode": "NOTIMP"
       },
       {
-        "query_type": "HTTPS",
-        "action": "reject"
-      },
-      {
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -51,8 +47,7 @@
           }
         ],
         "action": "predefined",
-        "rcode": "NOERROR",
-        "answer": "A"
+        "rcode": "NXDOMAIN"
       },
       {
         "domain_suffix": [
@@ -116,13 +111,8 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "route_address": [
-        "0.0.0.0/0",
-        "::/0"
-      ],
       "route_exclude_address": [
         "192.168.0.0/16",
-        "fc00::/7",
         "fe80::/10"
       ],
       "mtu": 9000,
@@ -192,6 +182,13 @@
           "overtls-bin.exe",
           "overtls.exe"
         ],
+        "action": "sniff",
+        "sniffer": [
+          "dns"
+        ]
+      },
+      {
+        "protocol": "dns",
         "action": "hijack-dns"
       },
       {
@@ -236,15 +233,70 @@
         "outbound": "proxy"
       },
       {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": [
+              "geosite-cn",
+              "geoip-cn"
+            ],
+            "invert": true
+          },
+          {
+            "network": "udp",
+            "port": 443
+          }
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "source_ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "clash_mode": "AllowAds",
+            "invert": true
+          },
+          {
+            "rule_set": "geosite-category-ads-all"
+          }
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "port": 53,
+        "action": "sniff",
+        "sniffer": [
+          "dns"
+        ]
+      },
+      {
         "action": "sniff",
         "sniffer": [
           "http",
           "tls",
-          "quic",
-          "dns",
           "bittorrent"
         ],
         "timeout": "500ms"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
       },
       {
         "type": "logical",
@@ -255,19 +307,6 @@
           }
         ],
         "outbound": "direct"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 53
-          },
-          {
-            "protocol": "dns"
-          }
-        ],
-        "action": "hijack-dns"
       },
       {
         "ip_is_private": true,
@@ -287,10 +326,14 @@
       },
       {
         "type": "logical",
-        "mode": "or",
+        "mode": "and",
         "rules": [
           {
-            "protocol": "quic"
+            "rule_set": [
+              "geosite-cn",
+              "geoip-cn"
+            ],
+            "invert": true
           },
           {
             "network": "udp",

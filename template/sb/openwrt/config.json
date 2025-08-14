@@ -1,20 +1,21 @@
 {
   "log": {
-    "level": "warn",
+    "level": "error",
     "timestamp": true
   },
   "dns": {
     "servers": [
       {
         "tag": "dns-remote",
-        "type": "https",
-        "server": "cloudflare-dns.com",
-        "domain_resolver": "dns-local",
-        "detour": "proxy"
+        "type": "udp",
+        "server": "127.0.0.1",
+        "server_port": 5335
       },
       {
         "tag": "dns-local",
-        "type": "dhcp"
+        "type": "udp",
+        "server": "127.0.0.1",
+        "server_port": 5336
       },
       {
         "tag": "dns-fake",
@@ -66,6 +67,12 @@
             ]
           },
           {
+            "inbound": [
+              "dns-real-in"
+            ],
+            "invert": true
+          },
+          {
             "rule_set": [
               "geosite-fake-filter"
             ],
@@ -78,13 +85,6 @@
         "action": "route",
         "server": "dns-fake",
         "rewrite_ttl": 1
-      },
-      {
-        "clash_mode": "GameDirect",
-        "rule_set": [
-          "geosite-category-games"
-        ],
-        "server": "dns-local"
       },
       {
         "domain_suffix": [
@@ -112,7 +112,7 @@
       }
     ],
     "final": "dns-remote",
-    "independent_cache": true
+    "disable_cache": true
   },
   "inbounds": [
     {
@@ -124,7 +124,7 @@
     {
       "type": "mixed",
       "tag": "mixed-in2",
-      "listen": "127.0.0.1",
+      "listen": "::",
       "listen_port": 20809
     },
     {
@@ -134,29 +134,87 @@
       "listen_port": 20810
     },
     {
+      "type": "mixed",
+      "tag": "mixed-in4",
+      "listen": "::",
+      "listen_port": 20811
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in5",
+      "listen": "::",
+      "listen_port": 20828
+    },
+    {
+      "type": "direct",
+      "tag": "dns-in",
+      "listen": "::",
+      "listen_port": 5339,
+      "network": "udp",
+      "override_address": "1.1.1.1",
+      "override_port": 53
+    },
+    {
+      "type": "direct",
+      "tag": "dns-real-in",
+      "listen": "::",
+      "listen_port": 5340,
+      "network": "udp",
+      "override_address": "1.1.1.1",
+      "override_port": 53
+    },
+    {
+      "type": "direct",
+      "tag": "dns53-in",
+      "listen": "::",
+      "listen_port": 53,
+      "network": "udp",
+      "override_address": "1.1.1.1",
+      "override_port": 53
+    },
+    {
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "singbox_tun",
       "address": [
-        "172.18.0.1/30",
-        "fdfe:dcba:9876::1/126"
-      ],
-      "route_exclude_address": [
-        "192.168.0.0/16",
-        "fe80::/10"
+        "172.64.0.1/30",
+        "fd6a:7446:b1cd::1/126"
       ],
       "mtu": 9000,
       "auto_route": true,
+      "auto_redirect": true,
       "strict_route": true,
-      "stack": "mixed"
+      "stack": "mixed",
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 20808
+        }
+      }
     }
   ],
   "outbounds": [],
   "route": {
     "default_domain_resolver": {
-      "server": "dns-local"
+      "server": "dns-local",
+      "strategy": "prefer_ipv6"
     },
     "rules": [
+      {
+        "inbound": [
+          "mixed-in2"
+        ],
+        "outbound": "bypass-edu-net",
+        "clash_mode": "BypassEduNet"
+      },
+      {
+        "outbound": "bypass-edu-net",
+        "inbound": [
+          "mixed-in4"
+        ],
+        "clash_mode": "BypassEduNet"
+      },
       {
         "inbound": [
           "mixed-in2"
@@ -164,6 +222,27 @@
         "outbound": "proxy"
       },
       {
+        "inbound": [
+          "mixed-in4"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "inbound": [
+          "mixed-in5"
+        ],
+        "outbound": "bypass-edu-net"
+      },
+      {
+        "inbound": [
+          "dns-in",
+          "dns-real-in",
+          "dns53-in"
+        ],
+        "action": "hijack-dns"
+      },
+      {
+        "source_ip_is_private": false,
         "network": [
           "udp"
         ],
@@ -177,90 +256,12 @@
         "action": "reject"
       },
       {
+        "source_ip_is_private": false,
         "ip_cidr": [
           "224.0.0.0/3",
           "ff00::/8"
         ],
         "action": "reject"
-      },
-      {
-        "port": [
-          53
-        ],
-        "process_name": [
-          "v2ray.exe",
-          "v2ray.exe",
-          "xray.exe",
-          "mihomo-windows-amd64-compatible.exe",
-          "mihomo-windows-amd64.exe",
-          "mihomo-linux-amd64.exe",
-          "clash.exe",
-          "mihomo.exe",
-          "hysteria.exe",
-          "naive.exe",
-          "naiveproxy.exe",
-          "tuic-client.exe",
-          "tuic.exe",
-          "juicity-client.exe",
-          "juicity.exe",
-          "hysteria-windows-amd64.exe",
-          "hysteria-linux-amd64.exe",
-          "hysteria.exe",
-          "brook_windows_amd64.exe",
-          "brook_linux_amd64.exe",
-          "brook.exe",
-          "overtls-bin.exe",
-          "overtls.exe"
-        ],
-        "action": "sniff",
-        "sniffer": [
-          "dns"
-        ]
-      },
-      {
-        "protocol": "dns",
-        "action": "hijack-dns"
-      },
-      {
-        "outbound": "direct",
-        "process_name": [
-          "v2ray.exe",
-          "v2ray.exe",
-          "xray.exe",
-          "mihomo-windows-amd64-compatible.exe",
-          "mihomo-windows-amd64.exe",
-          "mihomo-linux-amd64.exe",
-          "clash.exe",
-          "mihomo.exe",
-          "hysteria.exe",
-          "naive.exe",
-          "naiveproxy.exe",
-          "tuic-client.exe",
-          "tuic.exe",
-          "sing-box-client.exe",
-          "sing-box.exe",
-          "juicity-client.exe",
-          "juicity.exe",
-          "hysteria-windows-amd64.exe",
-          "hysteria-linux-amd64.exe",
-          "hysteria.exe",
-          "brook_windows_amd64.exe",
-          "brook_linux_amd64.exe",
-          "brook.exe",
-          "overtls-bin.exe",
-          "overtls.exe",
-          "utorrent.exe",
-          "qbittorrent.exe"
-        ]
-      },
-      {
-        "rule_set": "geoip-telegram",
-        "clash_mode": "Direct",
-        "outbound": "direct"
-      },
-      {
-        "rule_set": "geoip-telegram",
-        "outbound": "proxy"
       },
       {
         "type": "logical",
@@ -307,6 +308,90 @@
         ],
         "action": "reject",
         "method": "default"
+      },
+      {
+        "port": [
+          53
+        ],
+        "process_name": [
+          "v2ray",
+          "v2ray",
+          "xray",
+          "mihomo-windows-amd64-compatible",
+          "mihomo-windows-amd64",
+          "mihomo-linux-amd64",
+          "clash",
+          "mihomo",
+          "hysteria",
+          "naive",
+          "naiveproxy",
+          "tuic-client",
+          "tuic",
+          "juicity-client",
+          "juicity",
+          "hysteria-windows-amd64",
+          "hysteria-linux-amd64",
+          "hysteria",
+          "brook_windows_amd64",
+          "brook_linux_amd64",
+          "brook",
+          "overtls-bin",
+          "overtls"
+        ],
+        "action": "sniff",
+        "sniffer": [
+          "dns"
+        ]
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "outbound": "direct",
+        "process_name": [
+          "v2ray",
+          "v2ray",
+          "xray",
+          "mihomo-windows-amd64-compatible",
+          "mihomo-windows-amd64",
+          "mihomo-linux-amd64",
+          "clash",
+          "mihomo",
+          "hysteria",
+          "naive",
+          "naiveproxy",
+          "tuic-client",
+          "tuic",
+          "sing-box-client",
+          "sing-box",
+          "juicity-client",
+          "juicity",
+          "hysteria-windows-amd64",
+          "hysteria-linux-amd64",
+          "hysteria",
+          "brook_windows_amd64",
+          "brook_linux_amd64",
+          "brook",
+          "overtls-bin",
+          "overtls",
+          "utorrent",
+          "qbittorrent",
+          "smartdns"
+        ]
+      },
+      {
+        "outbound": "bypass-edu-net",
+        "clash_mode": "BypassEduNet"
+      },
+      {
+        "rule_set": "geoip-telegram",
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "geoip-telegram",
+        "outbound": "proxy"
       },
       {
         "port": 53,
@@ -453,7 +538,8 @@
       },
       {
         "action": "resolve",
-        "server": "dns-local"
+        "server": "dns-local",
+        "strategy": "prefer_ipv6"
       }
     ],
     "rule_set": [
@@ -462,8 +548,8 @@
         "tag": "geosite-category-games",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-category-games.srs",
-        "download_detour": "proxy",
+        "path": "/etc/sing-box/srss/geosite-category-games.srs",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -471,8 +557,8 @@
         "tag": "geosite-category-ads-all",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-ads-all.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-category-ads-all.srs",
-        "download_detour": "proxy",
+        "path": "/etc/sing-box/srss/geosite-category-ads-all.srs",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -480,8 +566,8 @@
         "tag": "geosite-private",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-private.srs",
-        "download_detour": "proxy",
+        "path": "/etc/sing-box/srss/geosite-private.srs",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -489,8 +575,8 @@
         "tag": "geosite-cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-cn.srs",
-        "download_detour": "proxy",
+        "path": "/etc/sing-box/srss/geosite-cn.srs",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -498,8 +584,8 @@
         "tag": "geoip-cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geoip-cn.srs",
-        "download_detour": "proxy",
+        "path": "/etc/sing-box/srss/geoip-cn.srs",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -507,8 +593,8 @@
         "tag": "geoip-telegram",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geoip-telegram.srs",
-        "download_detour": "proxy",
+        "path": "/etc/sing-box/srss/geoip-telegram.srs",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -516,7 +602,7 @@
         "tag": "geosite-geolocation-!cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-geolocation-!cn.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-geolocation-!cn.srs",
+        "path": "/etc/sing-box/srss/geosite-geolocation-!cn.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       },
@@ -525,7 +611,7 @@
         "tag": "geosite-fake-filter",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/fakeip-filter.srs",
-        "path": "D:\\Software\\v2rayN\\bin\\srss\\geosite-fake-filter.srs",
+        "path": "/etc/sing-box/srss/geosite-fake-filter.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
@@ -536,14 +622,15 @@
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "path": "D:\\Software\\v2rayN\\bin\\cache.db",
+      "path": "/etc/sing-box/cache.db",
       "store_fakeip": true
     },
     "clash_api": {
-      "external_controller": "127.0.0.1:20813",
-      "external_ui": "D:\\Software\\v2rayN\\bin\\ui",
+      "external_controller": "0.0.0.0:9090",
+      "external_ui": "/etc/sing-box/ui",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "proxy"
+      "external_ui_download_detour": "proxy-init"
     }
-  }
+  },
+  "providers": []
 }

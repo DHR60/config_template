@@ -123,15 +123,24 @@
                     "domain:doh.pub",
                     "domain:dot.pub",
                     "domain:360.cn",
-                    "domain:onedns.net",
+                    "domain:onedns.net"
+                ],
+                "skipFallback": true,
+                "tag": "domestic-dns-1"
+            },
+            {
+                "address": "https://dns.alidns.com/dns-query",
+                "domains": [
                     "geosite:cn"
                 ],
                 "expectIPs": [
                     "geoip:cn"
                 ],
-                "skipFallback": true
+                "skipFallback": true,
+                "tag": "domestic-dns-2"
             }
-        ]
+        ],
+        "tag": "dns-module"
     },
     "fakedns": [
         {
@@ -216,6 +225,21 @@
                 "type": "field",
                 "inboundTag": [
                     "socks2"
+                ],
+                "balancerTag": "proxy-round"
+            },
+            {
+                "type": "field",
+                "inboundTag": [
+                    "domestic-dns-1",
+                    "domestic-dns-2"
+                ],
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "inboundTag": [
+                    "dns-module"
                 ],
                 "balancerTag": "proxy-round"
             },

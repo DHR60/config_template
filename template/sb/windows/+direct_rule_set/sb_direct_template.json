@@ -39,8 +39,7 @@
           }
         ],
         "action": "predefined",
-        "rcode": "NOERROR",
-        "answer": "A"
+        "rcode": "NXDOMAIN"
       },
       {
         "domain_suffix": [
@@ -119,26 +118,68 @@
         "outbound": "proxy"
       },
       {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": [
+              "geosite-cn",
+              "geoip-cn"
+            ],
+            "invert": true
+          },
+          {
+            "network": "udp",
+            "port": 443
+          }
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "source_ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "clash_mode": "AllowAds",
+            "invert": true
+          },
+          {
+            "rule_set": "geosite-category-ads-all"
+          }
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "port": 53,
+        "action": "sniff",
+        "sniffer": [
+          "dns"
+        ]
+      },
+      {
         "action": "sniff",
         "sniffer": [
           "http",
-          "tls",
-          "quic",
-          "dns"
+          "tls"
         ],
         "timeout": "500ms"
       },
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 53
-          },
-          {
-            "protocol": "dns"
-          }
-        ],
+        "protocol": "dns",
         "action": "hijack-dns"
       },
       {
@@ -162,10 +203,14 @@
       },
       {
         "type": "logical",
-        "mode": "or",
+        "mode": "and",
         "rules": [
           {
-            "protocol": "quic"
+            "rule_set": [
+              "geosite-cn",
+              "geoip-cn"
+            ],
+            "invert": true
           },
           {
             "network": "udp",
