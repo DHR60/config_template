@@ -172,15 +172,8 @@
         "timeout": "500ms"
       },
       {
-        "protocol": "dns",
-        "action": "hijack-dns"
-      },
-      {
         "port": 53,
-        "action": "sniff",
-        "sniffer": [
-          "dns"
-        ]
+        "action": "hijack-dns"
       },
       {
         "action": "sniff-override-destination"

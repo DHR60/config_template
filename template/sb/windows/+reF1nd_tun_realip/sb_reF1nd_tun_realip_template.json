@@ -279,13 +279,6 @@
         "method": "default"
       },
       {
-        "port": 53,
-        "action": "sniff",
-        "sniffer": [
-          "dns"
-        ]
-      },
-      {
         "action": "sniff",
         "sniffer": [
           "http",
@@ -295,7 +288,7 @@
         "timeout": "500ms"
       },
       {
-        "protocol": "dns",
+        "port": 53,
         "action": "hijack-dns"
       },
       {

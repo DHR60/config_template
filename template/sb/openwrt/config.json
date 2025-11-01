@@ -338,13 +338,6 @@
           "overtls-bin",
           "overtls"
         ],
-        "action": "sniff",
-        "sniffer": [
-          "dns"
-        ]
-      },
-      {
-        "protocol": "dns",
         "action": "hijack-dns"
       },
       {
@@ -394,13 +387,6 @@
         "outbound": "proxy"
       },
       {
-        "port": 53,
-        "action": "sniff",
-        "sniffer": [
-          "dns"
-        ]
-      },
-      {
         "action": "sniff",
         "sniffer": [
           "http",
@@ -410,7 +396,7 @@
         "timeout": "500ms"
       },
       {
-        "protocol": "dns",
+        "port": 53,
         "action": "hijack-dns"
       },
       {
