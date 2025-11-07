@@ -115,7 +115,7 @@
         "192.168.0.0/16",
         "fe80::/10"
       ],
-      "mtu": 9000,
+      "mtu": 65535,
       "auto_route": true,
       "strict_route": true,
       "stack": "mixed"
@@ -134,22 +134,66 @@
         "outbound": "proxy"
       },
       {
-        "network": [
-          "udp"
-        ],
-        "port": [
-          135,
-          137,
-          138,
-          139,
-          5353
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "type": "logical",
+            "mode": "or",
+            "rules": [
+              {
+                "source_ip_is_private": true
+              },
+              {
+                "source_ip_cidr": [
+                  "dd00::/8"
+                ]
+              }
+            ],
+            "invert": true
+          },
+          {
+            "network": [
+              "udp"
+            ]
+          },
+          {
+            "port": [
+              135,
+              137,
+              138,
+              139,
+              5353
+            ]
+          }
         ],
         "action": "reject"
       },
       {
-        "ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "type": "logical",
+            "mode": "or",
+            "rules": [
+              {
+                "source_ip_is_private": true
+              },
+              {
+                "source_ip_cidr": [
+                  "dd00::/8"
+                ]
+              }
+            ],
+            "invert": true
+          },
+          {
+            "ip_cidr": [
+              "224.0.0.0/3",
+              "ff00::/8"
+            ]
+          }
         ],
         "action": "reject"
       },
@@ -252,18 +296,6 @@
         "method": "default"
       },
       {
-        "source_ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ],
-        "ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ],
-        "action": "reject",
-        "method": "default"
-      },
-      {
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -332,18 +364,6 @@
             "network": "udp",
             "port": 443
           }
-        ],
-        "action": "reject",
-        "method": "default"
-      },
-      {
-        "source_ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ],
-        "ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
         ],
         "action": "reject",
         "method": "default"

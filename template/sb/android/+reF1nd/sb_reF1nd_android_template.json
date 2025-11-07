@@ -128,7 +128,7 @@
           "server_port": 20808
         }
       },
-      "mtu": 9000,
+      "mtu": 65535,
       "stack": "mixed",
       "tag": "tun-in",
       "type": "tun"
@@ -172,6 +172,70 @@
         "mode": "and",
         "rules": [
           {
+            "type": "logical",
+            "mode": "or",
+            "rules": [
+              {
+                "source_ip_is_private": true
+              },
+              {
+                "source_ip_cidr": [
+                  "dd00::/8"
+                ]
+              }
+            ],
+            "invert": true
+          },
+          {
+            "network": [
+              "udp"
+            ]
+          },
+          {
+            "port": [
+              135,
+              137,
+              138,
+              139,
+              5353
+            ]
+          }
+        ],
+        "action": "reject"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "type": "logical",
+            "mode": "or",
+            "rules": [
+              {
+                "source_ip_is_private": true
+              },
+              {
+                "source_ip_cidr": [
+                  "dd00::/8"
+                ]
+              }
+            ],
+            "invert": true
+          },
+          {
+            "ip_cidr": [
+              "224.0.0.0/3",
+              "ff00::/8"
+            ]
+          }
+        ],
+        "action": "reject"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
             "rule_set": [
               "geosite-cn",
               "geoip-cn"
@@ -182,18 +246,6 @@
             "network": "udp",
             "port": 443
           }
-        ],
-        "action": "reject",
-        "method": "default"
-      },
-      {
-        "source_ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ],
-        "ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
         ],
         "action": "reject",
         "method": "default"
@@ -256,18 +308,6 @@
             "network": "udp",
             "port": 443
           }
-        ],
-        "action": "reject",
-        "method": "default"
-      },
-      {
-        "source_ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ],
-        "ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
         ],
         "action": "reject",
         "method": "default"
