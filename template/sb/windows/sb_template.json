@@ -43,10 +43,9 @@
       },
       {
         "domain_suffix": [
-          "bing.com",
-          "googleapis.cn",
-          "gstatic.com"
+          "bing.com"
         ],
+        "rule_set": "geosite-google",
         "server": "dns-remote"
       },
       {
@@ -282,10 +281,9 @@
       },
       {
         "domain_suffix": [
-          "bing.com",
-          "googleapis.cn",
-          "gstatic.com"
+          "bing.com"
         ],
+        "rule_set": "geosite-google",
         "outbound": "proxy"
       },
       {
@@ -364,6 +362,14 @@
         "tag": "geoip-telegram",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-google",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-google.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
