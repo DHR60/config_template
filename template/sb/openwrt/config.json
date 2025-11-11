@@ -42,6 +42,13 @@
         "rcode": "NOTIMP"
       },
       {
+        "domain": [
+          "basic-static-server.infinitynewtab.com"
+        ],
+        "action": "predefined",
+        "rcode": "NXDOMAIN"
+      },
+      {
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -100,6 +107,7 @@
           "akamaized.net",
           "moedot.net",
           "cycani.org",
+          "xifanacg.com",
           "skland.com",
           "aliyun.com",
           "online-fix.me"
@@ -149,7 +157,6 @@
       "tag": "dns-in",
       "listen": "::",
       "listen_port": 5339,
-      "network": "udp",
       "override_address": "1.1.1.1",
       "override_port": 53
     },
@@ -158,16 +165,6 @@
       "tag": "dns-real-in",
       "listen": "::",
       "listen_port": 5340,
-      "network": "udp",
-      "override_address": "1.1.1.1",
-      "override_port": 53
-    },
-    {
-      "type": "direct",
-      "tag": "dns53-in",
-      "listen": "::",
-      "listen_port": 53,
-      "network": "udp",
       "override_address": "1.1.1.1",
       "override_port": 53
     },
@@ -235,8 +232,7 @@
       {
         "inbound": [
           "dns-in",
-          "dns-real-in",
-          "dns53-in"
+          "dns-real-in"
         ],
         "action": "hijack-dns"
       },
@@ -367,6 +363,13 @@
           "overtls-bin",
           "overtls"
         ],
+        "action": "sniff",
+        "sniffer": [
+          "dns"
+        ]
+      },
+      {
+        "protocol": "dns",
         "action": "hijack-dns"
       },
       {
@@ -416,6 +419,13 @@
         "outbound": "proxy"
       },
       {
+        "port": 53,
+        "action": "sniff",
+        "sniffer": [
+          "dns"
+        ]
+      },
+      {
         "action": "sniff",
         "sniffer": [
           "http",
@@ -425,7 +435,7 @@
         "timeout": "500ms"
       },
       {
-        "port": 53,
+        "protocol": "dns",
         "action": "hijack-dns"
       },
       {
@@ -509,6 +519,7 @@
           "cnmdm.top",
           "akamaized.net",
           "moedot.net",
+          "xifanacg.com",
           "skland.com",
           "aliyun.com",
           "online-fix.me"

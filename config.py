@@ -50,8 +50,20 @@ def merge_config_with_template(
     if "providers" in config_data:
         result_data["providers"] = config_data["providers"]
 
+    # 保留配置文件中的observatory字段（如果存在）
+    if "observatory" in config_data:
+        result_data["observatory"] = config_data["observatory"]
+
+    # 保留配置文件中的burstObservatory字段（如果存在）
+    if "burstObservatory" in config_data:
+        result_data["burstObservatory"] = config_data["burstObservatory"]
+
     # 将配置文件的outbounds字段复制到结果中
     result_data["outbounds"] = config_data["outbounds"]
+
+    # 保留配置文件中的endbounds字段（如果存在）
+    if "endbounds" in config_data:
+        result_data["endbounds"] = config_data["endbounds"]
 
     return result_data
 
