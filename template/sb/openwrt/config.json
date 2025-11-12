@@ -78,20 +78,10 @@
             ]
           },
           {
-            "inbound": [
-              "dns-real-in"
-            ],
-            "invert": true
-          },
-          {
             "rule_set": [
-              "geosite-cn",
-              "geosite-fake-filter"
-            ],
-            "domain_suffix": [
-              "xiaomi.com"
-            ],
-            "invert": true
+              "geosite-google",
+              "geosite-bing"
+            ]
           }
         ],
         "action": "route",
@@ -132,6 +122,36 @@
           "geosite-cn"
         ],
         "server": "dns-local"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "query_type": [
+              "A",
+              "AAAA"
+            ]
+          },
+          {
+            "inbound": [
+              "dns-real-in"
+            ],
+            "invert": true
+          },
+          {
+            "rule_set": [
+              "geosite-fake-filter"
+            ],
+            "domain_suffix": [
+              "xiaomi.com"
+            ],
+            "invert": true
+          }
+        ],
+        "action": "route",
+        "server": "dns-fake",
+        "rewrite_ttl": 1
       }
     ],
     "final": "dns-remote",
