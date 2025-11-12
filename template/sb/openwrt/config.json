@@ -68,6 +68,10 @@
         "mode": "and",
         "rules": [
           {
+            "clash_mode": "RealIP",
+            "invert": true
+          },
+          {
             "query_type": [
               "A",
               "AAAA"
