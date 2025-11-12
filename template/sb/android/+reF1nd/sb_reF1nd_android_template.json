@@ -86,10 +86,10 @@
         "rewrite_ttl": 1
       },
       {
-        "domain_suffix": [
-          "bing.com"
+        "rule_set": [
+          "geosite-google",
+          "geosite-bing"
         ],
-        "rule_set": "geosite-google",
         "server": "dns-remote"
       },
       {
@@ -327,10 +327,10 @@
         "method": "default"
       },
       {
-        "domain_suffix": [
-          "bing.com"
+        "rule_set": [
+          "geosite-google",
+          "geosite-bing"
         ],
-        "rule_set": "geosite-google",
         "outbound": "proxy"
       },
       {
@@ -453,6 +453,15 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-google.srs",
         "path": "geosite-google.srs",
+        "download_detour": "proxy",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-bing",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-bing.srs",
+        "path": "geosite-bing.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
