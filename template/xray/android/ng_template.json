@@ -76,9 +76,6 @@
             {
                 "address": "fakedns",
                 "domains": [
-                    "domain:bing.com",
-                    "domain:googleapis.cn",
-                    "domain:gstatic.com",
                     "domain:senhewenhua.com",
                     "domain:cnmdm.top",
                     "domain:akamaized.net",
@@ -92,6 +89,8 @@
                     "domain:dot.pub",
                     "domain:360.cn",
                     "domain:onedns.net",
+                    "geosite:google",
+                    "geosite:bing",
                     "geosite:cn"
                 ]
             },
@@ -102,9 +101,8 @@
             {
                 "address": "https://1.1.1.1/dns-query",
                 "domains": [
-                    "domain:bing.com",
-                    "domain:googleapis.cn",
-                    "domain:gstatic.com"
+                    "geosite:google",
+                    "geosite:bing"
                 ],
                 "skipFallback": true
             },
@@ -272,15 +270,8 @@
             },
             {
                 "domain": [
-                    "domain:bing.com"
-                ],
-                "balancerTag": "proxy-round",
-                "type": "field"
-            },
-            {
-                "domain": [
-                    "domain:googleapis.cn",
-                    "domain:gstatic.com"
+                    "geosite:google",
+                    "geosite:bing"
                 ],
                 "balancerTag": "proxy-round",
                 "type": "field"

@@ -84,9 +84,8 @@
                 "address": "https://cloudflare-dns.com/dns-query",
                 "skipFallback": true,
                 "domains": [
-                    "domain:bing.com",
-                    "domain:googleapis.cn",
-                    "domain:gstatic.com"
+                    "geosite:google",
+                    "geosite:bing"
                 ]
             },
             {
@@ -250,15 +249,8 @@
                 "type": "field",
                 "balancerTag": "proxy-round",
                 "domain": [
-                    "domain:bing.com"
-                ]
-            },
-            {
-                "type": "field",
-                "balancerTag": "proxy-round",
-                "domain": [
-                    "domain:googleapis.cn",
-                    "domain:gstatic.com"
+                    "geosite:google",
+                    "geosite:bing"
                 ]
             },
             {
