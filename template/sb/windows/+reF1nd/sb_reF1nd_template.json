@@ -394,7 +394,8 @@
         "update_interval": "72h0m0s"
       }
     ],
-    "final": "direct"
+    "final": "direct",
+    "default_domain_match_strategy": "prefer_fqdn"
   },
   "experimental": {
     "cache_file": {
