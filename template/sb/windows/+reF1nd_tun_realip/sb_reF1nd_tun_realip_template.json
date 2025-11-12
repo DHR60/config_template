@@ -494,7 +494,8 @@
       },
       {
         "action": "resolve",
-        "server": "dns-remote"
+        "server": "dns-remote",
+        "match_only": true
       },
       {
         "type": "logical",
