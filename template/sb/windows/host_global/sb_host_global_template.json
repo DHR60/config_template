@@ -9,7 +9,6 @@
         "tag": "dns-remote",
         "type": "udp",
         "server": "1.1.1.1",
-        "domain_resolver": "dns-local",
         "detour": "proxy"
       },
       {
