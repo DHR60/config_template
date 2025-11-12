@@ -616,7 +616,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-geolocation-!cn.srs",
         "path": "/etc/sing-box/srss/geosite-geolocation-!cn.srs",
-        "download_detour": "proxy",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -625,7 +625,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/fakeip-filter.srs",
         "path": "/etc/sing-box/srss/geosite-fake-filter.srs",
-        "download_detour": "proxy",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -634,7 +634,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-google.srs",
         "path": "/etc/sing-box/srss/geosite-google.srs",
-        "download_detour": "proxy",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       },
       {
@@ -643,7 +643,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-bing.srs",
         "path": "/etc/sing-box/srss/geosite-bing.srs",
-        "download_detour": "proxy",
+        "download_detour": "proxy-init",
         "update_interval": "72h0m0s"
       }
     ],
