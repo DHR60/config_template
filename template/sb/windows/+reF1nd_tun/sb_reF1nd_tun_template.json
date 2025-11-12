@@ -134,6 +134,13 @@
         "rcode": "NXDOMAIN"
       },
       {
+        "clash_mode": "GameDirect",
+        "rule_set": [
+          "geosite-category-games"
+        ],
+        "server": "dns-local"
+      },
+      {
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -149,25 +156,14 @@
           },
           {
             "rule_set": [
-              "geosite-cn",
-              "geosite-fake-filter"
-            ],
-            "domain_suffix": [
-              "xiaomi.com"
-            ],
-            "invert": true
+              "geosite-google",
+              "geosite-bing"
+            ]
           }
         ],
         "action": "route",
         "server": "dns-fake",
         "rewrite_ttl": 1
-      },
-      {
-        "clash_mode": "GameDirect",
-        "rule_set": [
-          "geosite-category-games"
-        ],
-        "server": "dns-local"
       },
       {
         "rule_set": [
@@ -183,6 +179,7 @@
           "akamaized.net",
           "moedot.net",
           "cycani.org",
+          "xifanacg.com",
           "skland.com",
           "aliyun.com",
           "online-fix.me"
@@ -191,6 +188,30 @@
           "geosite-cn"
         ],
         "server": "dns-local"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "query_type": [
+              "A",
+              "AAAA"
+            ]
+          },
+          {
+            "rule_set": [
+              "geosite-fake-filter"
+            ],
+            "domain_suffix": [
+              "xiaomi.com"
+            ],
+            "invert": true
+          }
+        ],
+        "action": "route",
+        "server": "dns-fake",
+        "rewrite_ttl": 1
       }
     ],
     "final": "dns-remote",
