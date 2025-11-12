@@ -334,7 +334,7 @@
         "type": "remote",
         "tag": "geosite-category-games",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-games.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games.srs",
         "path": "../bin/srss/geosite-category-games.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
@@ -343,7 +343,7 @@
         "type": "remote",
         "tag": "geosite-category-ads-all",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-ads-all.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs",
         "path": "../bin/srss/geosite-category-ads-all.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
@@ -352,7 +352,7 @@
         "type": "remote",
         "tag": "geosite-private",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs",
         "path": "../bin/srss/geosite-private.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
@@ -361,7 +361,7 @@
         "type": "remote",
         "tag": "geosite-cn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
         "path": "../bin/srss/geosite-cn.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
@@ -370,7 +370,7 @@
         "type": "remote",
         "tag": "geoip-cn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
         "path": "../bin/srss/geoip-cn.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
@@ -379,7 +379,7 @@
         "type": "remote",
         "tag": "geoip-telegram",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs",
         "path": "../bin/srss/geoip-telegram.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
@@ -388,7 +388,7 @@
         "type": "remote",
         "tag": "geosite-google",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-google.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs",
         "path": "../bin/srss/geosite-google.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
@@ -397,7 +397,7 @@
         "type": "remote",
         "tag": "geosite-bing",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-bing.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs",
         "path": "../bin/srss/geosite-bing.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"

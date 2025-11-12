@@ -96,7 +96,7 @@
         "type": "remote",
         "tag": "geosite-private",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-private.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs",
         "download_detour": "proxy",
         "update_interval": "72h0m0s"
       }
