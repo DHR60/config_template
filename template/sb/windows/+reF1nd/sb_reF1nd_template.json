@@ -308,7 +308,8 @@
         "action": "sniff-override-destination"
       },
       {
-        "action": "resolve"
+        "action": "resolve",
+        "match_only": true
       },
       {
         "ip_is_private": true,

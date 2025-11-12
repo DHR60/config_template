@@ -149,6 +149,7 @@
           },
           {
             "rule_set": [
+              "geosite-cn",
               "geosite-fake-filter"
             ],
             "domain_suffix": [
@@ -528,7 +529,8 @@
       },
       {
         "action": "resolve",
-        "server": "dns-remote"
+        "server": "dns-remote",
+        "match_only": true
       },
       {
         "type": "logical",
