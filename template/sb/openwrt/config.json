@@ -529,16 +529,11 @@
           "aliyun.com",
           "online-fix.me"
         ],
-        "rule_set": "geosite-cn",
         "outbound": "direct"
       },
       {
-        "rule_set": "geosite-geolocation-!cn",
-        "outbound": "proxy"
-      },
-      {
         "action": "resolve",
-        "server": "dns-remote"
+        "match_only": true
       },
       {
         "type": "logical",
