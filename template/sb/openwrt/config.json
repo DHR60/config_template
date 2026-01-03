@@ -34,9 +34,21 @@
         "server": "dns-remote"
       },
       {
-        "query_type": [
-          64,
-          65
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "domain": [
+              "project.pages.dev"
+            ],
+            "invert": true
+          },
+          {
+            "query_type": [
+              64,
+              65
+            ]
+          }
         ],
         "action": "predefined",
         "rcode": "NOTIMP"
@@ -213,6 +225,7 @@
       "auto_route": true,
       "auto_redirect": true,
       "strict_route": true,
+      "endpoint_independent_nat": true,
       "stack": "mixed",
       "platform": {
         "http_proxy": {
@@ -252,68 +265,13 @@
         "action": "hijack-dns"
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "type": "logical",
-            "mode": "or",
-            "rules": [
-              {
-                "source_ip_is_private": true
-              },
-              {
-                "source_ip_cidr": [
-                  "dd00::/8"
-                ]
-              }
-            ],
-            "invert": true
-          },
-          {
-            "network": [
-              "udp"
-            ]
-          },
-          {
-            "port": [
-              135,
-              137,
-              138,
-              139,
-              5353
-            ]
-          }
+        "ip_cidr": [
+          "224.0.0.0/3",
+          "dd4c:a6e4:b80f::/48",
+          "ff00::/8",
+          "fe80::/10"
         ],
-        "action": "reject"
-      },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "type": "logical",
-            "mode": "or",
-            "rules": [
-              {
-                "source_ip_is_private": true
-              },
-              {
-                "source_ip_cidr": [
-                  "dd00::/8"
-                ]
-              }
-            ],
-            "invert": true
-          },
-          {
-            "ip_cidr": [
-              "224.0.0.0/3",
-              "ff00::/8"
-            ]
-          }
-        ],
-        "action": "reject"
+        "outbound": "direct"
       },
       {
         "type": "logical",
@@ -526,6 +484,20 @@
           "online-fix.me"
         ],
         "outbound": "direct"
+      },
+      {
+        "clash_mode": "FastMatch",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "FastMatch",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "outbound": "proxy"
       },
       {
         "action": "resolve",
