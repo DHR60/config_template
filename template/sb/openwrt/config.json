@@ -213,6 +213,7 @@
       "auto_route": true,
       "auto_redirect": true,
       "strict_route": true,
+      "endpoint_independent_nat": true,
       "stack": "mixed",
       "platform": {
         "http_proxy": {
@@ -526,6 +527,20 @@
           "online-fix.me"
         ],
         "outbound": "direct"
+      },
+      {
+        "clash_mode": "FastMatch",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "FastMatch",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "outbound": "proxy"
       },
       {
         "action": "resolve",
