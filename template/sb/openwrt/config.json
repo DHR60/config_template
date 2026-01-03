@@ -162,10 +162,28 @@
       "listen_port": 20811
     },
     {
-      "type": "mixed",
-      "tag": "mixed-in5",
+      "type": "shadowsocks",
+      "tag": "ss-in5",
       "listen": "::",
-      "listen_port": 20828
+      "listen_port": 20814,
+      "method": "none",
+      "password": "none"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "ss-in6",
+      "listen": "::",
+      "listen_port": 20815,
+      "method": "none",
+      "password": "none"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "ss-in7",
+      "listen": "::",
+      "listen_port": 20816,
+      "method": "none",
+      "password": "none"
     },
     {
       "type": "direct",
@@ -214,35 +232,17 @@
     "rules": [
       {
         "inbound": [
-          "mixed-in2"
-        ],
-        "outbound": "bypass-edu-net",
-        "clash_mode": "BypassEduNet"
-      },
-      {
-        "outbound": "bypass-edu-net",
-        "inbound": [
-          "mixed-in4"
-        ],
-        "clash_mode": "BypassEduNet"
-      },
-      {
-        "inbound": [
-          "mixed-in2"
+          "mixed-in2",
+          "ss-in5"
         ],
         "outbound": "proxy"
       },
       {
         "inbound": [
-          "mixed-in4"
+          "mixed-in4",
+          "ss-in7"
         ],
         "outbound": "direct"
-      },
-      {
-        "inbound": [
-          "mixed-in5"
-        ],
-        "outbound": "bypass-edu-net"
       },
       {
         "inbound": [
@@ -412,10 +412,6 @@
           "qbittorrent",
           "smartdns"
         ]
-      },
-      {
-        "outbound": "bypass-edu-net",
-        "clash_mode": "BypassEduNet"
       },
       {
         "rule_set": "geoip-telegram",
