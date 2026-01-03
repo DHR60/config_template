@@ -105,6 +105,17 @@
         "server": "dns-remote"
       },
       {
+        "clash_mode": "GameDirect",
+        "rule_set": [
+          "geosite-category-games"
+        ],
+        "domain_keyword": [
+          "epic",
+          "steam"
+        ],
+        "server": "dns-local"
+      },
+      {
         "domain_suffix": [
           "senhewenhua.com",
           "cnmdm.top",
@@ -513,6 +524,10 @@
         "clash_mode": "GameDirect",
         "rule_set": [
           "geosite-category-games"
+        ],
+        "domain_keyword": [
+          "epic",
+          "steam"
         ],
         "outbound": "direct"
       },
