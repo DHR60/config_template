@@ -221,6 +221,11 @@
         "172.64.0.1/30",
         "fd6a:7446:b1cd::1/126"
       ],
+      "route_exclude_address": [
+        "fe80::/10",
+        "ff02::/16",
+        "ff05::/16"
+      ],
       "mtu": 65535,
       "auto_route": true,
       "auto_redirect": true,
@@ -265,9 +270,24 @@
         "action": "hijack-dns"
       },
       {
+        "port": 53,
+        "action": "hijack-dns"
+      },
+      {
         "ip_cidr": [
+          "192.168.0.0/16",
           "224.0.0.0/3",
-          "dd4c:a6e4:b80f::/48",
+          "ddcc:5175:7234::/48",
+          "ff00::/8",
+          "fe80::/10"
+        ],
+        "action": "bypass"
+      },
+      {
+        "ip_cidr": [
+          "192.168.0.0/16",
+          "224.0.0.0/3",
+          "ddcc:5175:7234::/48",
           "ff00::/8",
           "fe80::/10"
         ],
@@ -388,10 +408,6 @@
           "bittorrent"
         ],
         "timeout": "500ms"
-      },
-      {
-        "port": 53,
-        "action": "hijack-dns"
       },
       {
         "type": "logical",
