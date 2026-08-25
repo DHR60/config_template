@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/reF1nd/sing-box/reF1nd-testing/docs/schema.json",
   "log": {
     "level": "error",
     "timestamp": true
@@ -285,7 +286,6 @@
       "auto_route": true,
       "auto_redirect": true,
       "strict_route": true,
-      "endpoint_independent_nat": true,
       "stack": "mixed",
       "platform": {
         "http_proxy": {
@@ -596,7 +596,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games.srs",
         "path": "/etc/sing-box/srss/geosite-category-games.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -605,7 +605,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs",
         "path": "/etc/sing-box/srss/geosite-category-ads-all.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -614,7 +614,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs",
         "path": "/etc/sing-box/srss/geosite-private.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -623,7 +623,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
         "path": "/etc/sing-box/srss/geosite-cn.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -632,7 +632,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
         "path": "/etc/sing-box/srss/geoip-cn.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -641,7 +641,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs",
         "path": "/etc/sing-box/srss/geoip-telegram.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -650,7 +650,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
         "path": "/etc/sing-box/srss/geosite-geolocation-!cn.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -659,7 +659,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/fakeip-filter.srs",
         "path": "/etc/sing-box/srss/geosite-fake-filter.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -668,7 +668,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs",
         "path": "/etc/sing-box/srss/geosite-google.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -677,14 +677,28 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs",
         "path": "/etc/sing-box/srss/geosite-bing.srs",
-        "download_detour": "proxy-init",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       }
     ],
     "final": "direct",
+    "default_http_client": "proxy-client",
     "auto_detect_interface": true,
     "default_domain_match_strategy": "prefer_fqdn"
   },
+  "http_clients": [
+    {
+      "tag": "proxy-client",
+      "detour": "proxy"
+    },
+    {
+      "tag": "proxy-provider-client",
+      "headers": {
+        "User-Agent": "clash-verge/v2.5.2"
+      },
+      "detour": "proxy"
+    }
+  ],
   "experimental": {
     "cache_file": {
       "enabled": true,
@@ -695,7 +709,7 @@
       "external_controller": "0.0.0.0:9090",
       "external_ui": "/etc/sing-box/ui",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "proxy-init"
+      "external_ui_http_client": "proxy-client"
     }
   },
   "providers": []

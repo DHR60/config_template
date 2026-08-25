@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/reF1nd/sing-box/reF1nd-testing/docs/schema.json",
   "log": {
     "level": "warn",
     "timestamp": true
@@ -6,15 +7,52 @@
   "dns": {
     "servers": [
       {
-        "tag": "dns-remote",
-        "type": "https",
+        "server": "223.5.5.5",
+        "type": "udp",
+        "tag": "local-local"
+      },
+      {
         "server": "cloudflare-dns.com",
-        "domain_resolver": "dns-domain-hosts",
+        "domain_resolver": "hosts-dns",
+        "path": "/dns-query",
+        "type": "https",
+        "tag": "remote-dns-1",
         "detour": "proxy"
       },
       {
-        "tag": "dns-local",
-        "type": "dhcp"
+        "server": "dns.google",
+        "domain_resolver": "hosts-dns",
+        "path": "/dns-query",
+        "type": "https",
+        "tag": "remote-dns-2",
+        "detour": "proxy"
+      },
+      {
+        "server": "8.8.8.8",
+        "domain_resolver": "local-local",
+        "type": "udp",
+        "tag": "remote-dns-3",
+        "detour": "proxy"
+      },
+      {
+        "server": "dns.alidns.com",
+        "domain_resolver": "hosts-dns",
+        "path": "/dns-query",
+        "type": "https",
+        "tag": "direct-dns-1"
+      },
+      {
+        "server": "doh.pub",
+        "domain_resolver": "hosts-dns",
+        "path": "/dns-query",
+        "type": "https",
+        "tag": "direct-dns-2"
+      },
+      {
+        "server": "119.29.29.29",
+        "domain_resolver": "local-local",
+        "type": "udp",
+        "tag": "direct-dns-3"
       },
       {
         "predefined": {
@@ -49,10 +87,10 @@
             "2606:4700::6810:f9f9"
           ],
           "dns.cloudflare.com": [
-            "104.16.132.229",
-            "104.16.133.229",
-            "2606:4700::6810:84e5",
-            "2606:4700::6810:85e5"
+            "162.159.61.8",
+            "172.64.41.8",
+            "2a06:98c1:52::8",
+            "2803:f800:53::8"
           ],
           "dot.pub": [
             "1.12.12.12",
@@ -75,8 +113,10 @@
             "2a02:6b8:0:1::feed:0ff"
           ],
           "dns.sb": [
+            "45.11.45.11",
             "185.222.222.222",
-            "2a09::"
+            "2a09::",
+            "2a11::"
           ],
           "dns.umbrella.com": [
             "208.67.220.220",
@@ -89,34 +129,71 @@
             "208.67.222.222",
             "2620:119:35::35",
             "2620:119:53::53"
+          ],
+          "engage.cloudflareclient.com": [
+            "162.159.192.1",
+            "2606:4700:d0::a29f:c001"
           ]
         },
         "type": "hosts",
-        "tag": "dns-domain-hosts"
+        "tag": "hosts-dns"
       }
     ],
     "rules": [
       {
-        "clash_mode": "Direct",
-        "server": "dns-local"
+        "server": "remote-dns-1",
+        "clash_mode": "Global"
       },
       {
-        "clash_mode": "Global",
-        "server": "dns-remote"
+        "server": "direct-dns-1",
+        "clash_mode": "Direct"
       },
       {
+        "action": "predefined",
+        "rcode": "NOERROR",
         "query_type": [
           64,
           65
-        ],
-        "action": "predefined",
-        "rcode": "NOTIMP"
+        ]
       },
       {
+        "server": "direct-dns-1",
         "rule_set": [
           "geosite-private"
         ],
-        "server": "dns-direct"
+        "action": "evaluate",
+        "tag": "direct-dns-1-geosite-private"
+      },
+      {
+        "server": "direct-dns-2",
+        "rule_set": [
+          "geosite-private"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-2-geosite-private"
+      },
+      {
+        "server": "direct-dns-3",
+        "rule_set": [
+          "geosite-private"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-3-geosite-private"
+      },
+      {
+        "action": "respond",
+        "match_response": "direct-dns-1-geosite-private",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "direct-dns-2-geosite-private",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "direct-dns-3-geosite-private",
+        "race": true
       },
       {
         "type": "logical",
@@ -134,20 +211,94 @@
         "rcode": "NXDOMAIN"
       },
       {
+        "server": "remote-dns-1",
         "rule_set": [
           "geosite-google",
           "geosite-bing"
         ],
-        "server": "dns-remote"
+        "action": "evaluate",
+        "tag": "remote-dns-1-geosite-google-bing"
       },
       {
+        "server": "remote-dns-2",
+        "rule_set": [
+          "geosite-google",
+          "geosite-bing"
+        ],
+        "action": "evaluate",
+        "tag": "remote-dns-2-geosite-google-bing"
+      },
+      {
+        "server": "remote-dns-3",
+        "rule_set": [
+          "geosite-google",
+          "geosite-bing"
+        ],
+        "action": "evaluate",
+        "tag": "remote-dns-3-geosite-google-bing"
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-1-geosite-google-bing",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-2-geosite-google-bing",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-3-geosite-google-bing",
+        "race": true
+      },
+      {
+        "server": "direct-dns-1",
         "clash_mode": "GameDirect",
         "rule_set": [
           "geosite-category-games"
         ],
-        "server": "dns-local"
+        "action": "evaluate",
+        "tag": "direct-dns-1-direct-game"
       },
       {
+        "server": "direct-dns-2",
+        "clash_mode": "GameDirect",
+        "rule_set": [
+          "geosite-category-games"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-2-direct-game"
+      },
+      {
+        "server": "direct-dns-3",
+        "clash_mode": "GameDirect",
+        "rule_set": [
+          "geosite-category-games"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-3-direct-game"
+      },
+      {
+        "action": "respond",
+        "clash_mode": "GameDirect",
+        "match_response": "direct-dns-1-direct-game",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "clash_mode": "GameDirect",
+        "match_response": "direct-dns-2-direct-game",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "clash_mode": "GameDirect",
+        "match_response": "direct-dns-3-direct-game",
+        "race": true
+      },
+      {
+        "server": "direct-dns-1",
         "domain_suffix": [
           "senhewenhua.com",
           "cnmdm.top",
@@ -158,14 +309,177 @@
           "aliyun.com",
           "online-fix.me"
         ],
+        "action": "evaluate",
+        "tag": "direct-dns-1-direct-add"
+      },
+      {
+        "server": "direct-dns-2",
+        "domain_suffix": [
+          "senhewenhua.com",
+          "cnmdm.top",
+          "akamaized.net",
+          "moedot.net",
+          "cycani.org",
+          "skland.com",
+          "aliyun.com",
+          "online-fix.me"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-2-direct-add"
+      },
+      {
+        "server": "direct-dns-3",
+        "domain_suffix": [
+          "senhewenhua.com",
+          "cnmdm.top",
+          "akamaized.net",
+          "moedot.net",
+          "cycani.org",
+          "skland.com",
+          "aliyun.com",
+          "online-fix.me"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-3-direct-add"
+      },
+      {
+        "action": "respond",
+        "match_response": "direct-dns-1-direct-add",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "direct-dns-2-direct-add",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "direct-dns-3-direct-add",
+        "race": true
+      },
+      {
+        "server": "direct-dns-1",
         "rule_set": [
           "geosite-cn"
         ],
-        "server": "dns-local"
+        "action": "evaluate",
+        "tag": "direct-dns-1-cn-match"
+      },
+      {
+        "server": "direct-dns-2",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-2-cn-match"
+      },
+      {
+        "server": "direct-dns-3",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "action": "evaluate",
+        "tag": "direct-dns-3-cn-match"
+      },
+      {
+        "rule_set": [
+          "geoip-cn"
+        ],
+        "action": "respond",
+        "match_response": "direct-dns-1-cn-match",
+        "race": true
+      },
+      {
+        "rule_set": [
+          "geoip-cn"
+        ],
+        "action": "respond",
+        "match_response": "direct-dns-2-cn-match",
+        "race": true
+      },
+      {
+        "rule_set": [
+          "geoip-cn"
+        ],
+        "action": "respond",
+        "match_response": "direct-dns-3-cn-match",
+        "race": true
+      },
+      {
+        "server": "remote-dns-1",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "action": "evaluate",
+        "tag": "remote-dns-1-cn-match",
+        "speculative": true
+      },
+      {
+        "server": "remote-dns-2",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "action": "evaluate",
+        "tag": "remote-dns-2-cn-match",
+        "speculative": true
+      },
+      {
+        "server": "remote-dns-3",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "action": "evaluate",
+        "tag": "remote-dns-3-cn-match",
+        "speculative": true
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-1-cn-match",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-2-cn-match",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-3-cn-match",
+        "race": true
+      },
+      {
+        "server": "remote-dns-1",
+        "action": "evaluate",
+        "tag": "remote-dns-1-final"
+      },
+      {
+        "server": "remote-dns-2",
+        "action": "evaluate",
+        "tag": "remote-dns-2-final"
+      },
+      {
+        "server": "remote-dns-3",
+        "action": "evaluate",
+        "tag": "remote-dns-3-final"
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-1-final",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-2-final",
+        "race": true
+      },
+      {
+        "action": "respond",
+        "match_response": "remote-dns-3-final",
+        "race": true
       }
     ],
-    "final": "dns-remote",
-    "independent_cache": true
+    "final": "remote-dns-1",
+    "optimistic": true
   },
   "inbounds": [
     {
@@ -207,7 +521,7 @@
   "outbounds": [],
   "route": {
     "default_domain_resolver": {
-      "server": "dns-local"
+      "server": "direct-dns-1"
     },
     "rules": [
       {
@@ -472,7 +786,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games.srs",
         "path": "../bin/srss/geosite-category-games.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -481,7 +795,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs",
         "path": "../bin/srss/geosite-category-ads-all.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -490,7 +804,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs",
         "path": "../bin/srss/geosite-private.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -499,7 +813,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
         "path": "../bin/srss/geosite-cn.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -508,7 +822,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
         "path": "../bin/srss/geoip-cn.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -517,7 +831,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs",
         "path": "../bin/srss/geoip-telegram.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -526,7 +840,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
         "path": "../bin/srss/geosite-geolocation-!cn.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -535,7 +849,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs",
         "path": "../bin/srss/geosite-google.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       },
       {
@@ -544,14 +858,28 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs",
         "path": "../bin/srss/geosite-bing.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       }
     ],
     "final": "direct",
+    "default_http_client": "proxy-client",
     "auto_detect_interface": true,
     "default_domain_match_strategy": "prefer_fqdn"
   },
+  "http_clients": [
+    {
+      "tag": "proxy-client",
+      "detour": "proxy"
+    },
+    {
+      "tag": "proxy-provider-client",
+      "headers": {
+        "User-Agent": "clash-verge/v2.5.2"
+      },
+      "detour": "proxy"
+    }
+  ],
   "experimental": {
     "cache_file": {
       "enabled": true,
@@ -561,7 +889,7 @@
       "external_controller": "127.0.0.1:20813",
       "external_ui": "../bin/ui",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "proxy"
+      "external_ui_http_client": "proxy-client"
     }
   }
 }

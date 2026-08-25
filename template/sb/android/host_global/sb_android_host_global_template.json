@@ -1,4 +1,5 @@
 {
+  "$schema": "https://sing-box.sagernet.org/schema.json",
   "log": {
     "level": "error",
     "timestamp": true
@@ -32,12 +33,10 @@
         "rewrite_ttl": 1
       }
     ],
-    "final": "dns-remote",
-    "independent_cache": false
+    "final": "dns-remote"
   },
   "inbounds": [
     {
-      "endpoint_independent_nat": false,
       "auto_route": true,
       "address": [
         "172.19.0.1/28",
@@ -95,13 +94,20 @@
         "tag": "geosite-private",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs",
-        "download_detour": "proxy",
+        "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       }
     ],
     "final": "proxy",
+    "default_http_client": "proxy-client",
     "auto_detect_interface": true
   },
+  "http_clients": [
+    {
+      "tag": "proxy-client",
+      "detour": "proxy"
+    }
+  ],
   "experimental": {
     "cache_file": {
       "enabled": true,
