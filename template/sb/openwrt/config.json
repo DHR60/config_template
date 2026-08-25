@@ -20,8 +20,7 @@
       {
         "tag": "dns-fake",
         "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
+        "inet4_range": "11.0.0.0/8"
       }
     ],
     "rules": [
@@ -372,25 +371,6 @@
         "mode": "and",
         "rules": [
           {
-            "rule_set": [
-              "geosite-cn",
-              "geoip-cn"
-            ],
-            "invert": true
-          },
-          {
-            "network": "udp",
-            "port": 443
-          }
-        ],
-        "action": "reject",
-        "method": "default"
-      },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
             "clash_mode": "AllowAds",
             "invert": true
           },
@@ -402,68 +382,22 @@
         "method": "default"
       },
       {
-        "port": [
-          53
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": [
+              "geoip-cn"
+            ],
+            "invert": true
+          },
+          {
+            "network": "udp",
+            "port": 443
+          }
         ],
-        "process_name": [
-          "v2ray",
-          "v2ray",
-          "xray",
-          "mihomo-windows-amd64-compatible",
-          "mihomo-windows-amd64",
-          "mihomo-linux-amd64",
-          "clash",
-          "mihomo",
-          "hysteria",
-          "naive",
-          "naiveproxy",
-          "tuic-client",
-          "tuic",
-          "juicity-client",
-          "juicity",
-          "hysteria-windows-amd64",
-          "hysteria-linux-amd64",
-          "hysteria",
-          "brook_windows_amd64",
-          "brook_linux_amd64",
-          "brook",
-          "overtls-bin",
-          "overtls"
-        ],
-        "action": "hijack-dns"
-      },
-      {
-        "outbound": "direct",
-        "process_name": [
-          "v2ray",
-          "v2ray",
-          "xray",
-          "mihomo-windows-amd64-compatible",
-          "mihomo-windows-amd64",
-          "mihomo-linux-amd64",
-          "clash",
-          "mihomo",
-          "hysteria",
-          "naive",
-          "naiveproxy",
-          "tuic-client",
-          "tuic",
-          "sing-box-client",
-          "sing-box",
-          "juicity-client",
-          "juicity",
-          "hysteria-windows-amd64",
-          "hysteria-linux-amd64",
-          "hysteria",
-          "brook_windows_amd64",
-          "brook_linux_amd64",
-          "brook",
-          "overtls-bin",
-          "overtls",
-          "utorrent",
-          "qbittorrent",
-          "smartdns"
-        ]
+        "action": "reject",
+        "method": "default"
       },
       {
         "rule_set": "geoip-telegram",
@@ -521,9 +455,26 @@
         "mode": "and",
         "rules": [
           {
+            "clash_mode": "AllowAds",
+            "invert": true
+          },
+          {
+            "rule_set": "geosite-category-ads-all"
+          }
+        ],
+        "action": "reject",
+        "method": "default"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "clash_mode": "FastMatch"
+          },
+          {
             "rule_set": [
-              "geosite-cn",
-              "geoip-cn"
+              "geosite-cn"
             ],
             "invert": true
           },
@@ -540,11 +491,29 @@
         "mode": "and",
         "rules": [
           {
-            "clash_mode": "AllowAds",
+            "clash_mode": "FastMatch",
             "invert": true
           },
           {
-            "rule_set": "geosite-category-ads-all"
+            "network": "udp",
+            "port": 443
+          }
+        ],
+        "action": "resolve"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": [
+              "geoip-cn"
+            ],
+            "invert": true
+          },
+          {
+            "network": "udp",
+            "port": 443
           }
         ],
         "action": "reject",

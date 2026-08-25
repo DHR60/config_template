@@ -105,6 +105,12 @@
         "server": "dns-remote"
       },
       {
+        "rule_set": [
+          "geosite-private"
+        ],
+        "server": "dns-direct"
+      },
+      {
         "type": "logical",
         "mode": "and",
         "rules": [

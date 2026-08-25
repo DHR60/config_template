@@ -19,8 +19,7 @@
       {
         "tag": "dns-fake",
         "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
+        "inet4_range": "11.0.0.0/8"
       },
       {
         "predefined": {
@@ -117,6 +116,12 @@
         ],
         "action": "predefined",
         "rcode": "NOTIMP"
+      },
+      {
+        "rule_set": [
+          "geosite-private"
+        ],
+        "server": "dns-direct"
       },
       {
         "type": "logical",
