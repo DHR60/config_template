@@ -62,26 +62,6 @@
       },
       {
         "domain": [
-          "basic-static-server.infinitynewtab.com"
-        ],
-        "action": "predefined",
-        "rcode": "NXDOMAIN"
-      },
-      {
-        "domain": [
-          "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.4.3.2.7.5.7.1.5.c.c.d.d.ip6.arpa"
-        ],
-        "query_type": [
-          "PTR"
-        ],
-        "action": "predefined",
-        "rcode": "NOERROR",
-        "answer": [
-          "* 60 IN PTR istoreos.home.arpa."
-        ]
-      },
-      {
-        "domain": [
           "istoreos.home.arpa"
         ],
         "query_type": [
@@ -90,20 +70,7 @@
         "action": "predefined",
         "rcode": "NOERROR",
         "answer": [
-          "* 60 IN A 192.168.100.1"
-        ]
-      },
-      {
-        "domain": [
-          "istoreos.home.arpa"
-        ],
-        "query_type": [
-          "AAAA"
-        ],
-        "action": "predefined",
-        "rcode": "NOERROR",
-        "answer": [
-          "* 60 IN AAAA ddcc:5175:7234::1"
+          "istoreos.home.arpa. 60 IN A 192.168.100.1"
         ]
       },
       {
@@ -401,11 +368,6 @@
       },
       {
         "rule_set": "geoip-telegram",
-        "clash_mode": "Direct",
-        "outbound": "direct"
-      },
-      {
-        "rule_set": "geoip-telegram",
         "outbound": "proxy"
       },
       {
@@ -689,14 +651,14 @@
   "http_clients": [
     {
       "tag": "proxy-client",
-      "detour": "proxy"
+      "detour": "proxy-init"
     },
     {
       "tag": "proxy-provider-client",
       "headers": {
         "User-Agent": "clash-verge/v2.5.2"
       },
-      "detour": "proxy"
+      "detour": "proxy-init"
     }
   ],
   "experimental": {

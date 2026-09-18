@@ -515,11 +515,6 @@
       },
       {
         "rule_set": "geoip-telegram",
-        "clash_mode": "Direct",
-        "outbound": "direct"
-      },
-      {
-        "rule_set": "geoip-telegram",
         "outbound": "proxy"
       },
       {
