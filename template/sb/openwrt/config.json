@@ -266,8 +266,7 @@
   "outbounds": [],
   "route": {
     "default_domain_resolver": {
-      "server": "dns-local",
-      "strategy": "prefer_ipv6"
+      "server": "dns-local"
     },
     "rules": [
       {
@@ -531,8 +530,7 @@
       },
       {
         "action": "resolve",
-        "server": "dns-local",
-        "strategy": "prefer_ipv6"
+        "server": "dns-local"
       }
     ],
     "rule_set": [

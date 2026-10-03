@@ -40,6 +40,15 @@
         "detour": "proxy"
       },
       {
+        "type": "group",
+        "tag": "remote-dns-group",
+        "servers": [
+          "remote-dns-1",
+          "remote-dns-2",
+          "remote-dns-3"
+        ]
+      },
+      {
         "server": "dns.alidns.com",
         "domain_resolver": "hosts-dns",
         "path": "/dns-query",
@@ -58,6 +67,15 @@
         "domain_resolver": "local-local",
         "type": "udp",
         "tag": "direct-dns-3"
+      },
+      {
+        "type": "group",
+        "tag": "direct-dns-group",
+        "servers": [
+          "direct-dns-1",
+          "direct-dns-2",
+          "direct-dns-3"
+        ]
       },
       {
         "predefined": {
@@ -466,7 +484,7 @@
         "race": true
       }
     ],
-    "final": "remote-dns-1",
+    "final": "remote-dns-group",
     "optimistic": true
   },
   "inbounds": [
@@ -504,7 +522,7 @@
   "outbounds": [],
   "route": {
     "default_domain_resolver": {
-      "server": "direct-dns-1"
+      "server": "direct-dns-group"
     },
     "rules": [
       {
@@ -647,7 +665,9 @@
         "outbound": "proxy"
       },
       {
-        "action": "resolve"
+        "action": "resolve",
+        "server": "remote-dns-group",
+        "match_only": true
       },
       {
         "type": "logical",
@@ -662,6 +682,10 @@
         ],
         "invert": true,
         "outbound": "proxy"
+      },
+      {
+        "action": "resolve",
+        "server": "direct-dns-group"
       }
     ],
     "rule_set": [
