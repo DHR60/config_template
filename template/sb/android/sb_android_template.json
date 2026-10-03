@@ -647,8 +647,7 @@
         "outbound": "proxy"
       },
       {
-        "action": "resolve",
-        "server": "dns-remote"
+        "action": "resolve"
       },
       {
         "ip_is_private": true,

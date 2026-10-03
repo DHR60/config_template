@@ -785,8 +785,7 @@
         "outbound": "proxy"
       },
       {
-        "action": "resolve",
-        "server": "dns-remote"
+        "action": "resolve"
       },
       {
         "type": "logical",
@@ -801,10 +800,6 @@
         ],
         "invert": true,
         "outbound": "proxy"
-      },
-      {
-        "action": "resolve",
-        "server": "dns-local"
       }
     ],
     "rule_set": [

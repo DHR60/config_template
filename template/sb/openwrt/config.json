@@ -296,41 +296,25 @@
         "action": "hijack-dns"
       },
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "ip_cidr": [
-              "192.168.0.0/16",
-              "224.0.0.0/3",
-              "ddcc:5175:7234::/48",
-              "ff00::/8",
-              "fe80::/10"
-            ]
-          },
-          {
-            "ip_is_private": true
-          }
+        "ip_cidr": [
+          "192.168.0.0/16",
+          "224.0.0.0/3",
+          "ddcc:5175:7234::/48",
+          "ff00::/8",
+          "fe80::/10"
         ],
+        "ip_is_private": true,
         "action": "bypass"
       },
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "ip_cidr": [
-              "192.168.0.0/16",
-              "224.0.0.0/3",
-              "ddcc:5175:7234::/48",
-              "ff00::/8",
-              "fe80::/10"
-            ]
-          },
-          {
-            "ip_is_private": true
-          }
+        "ip_cidr": [
+          "192.168.0.0/16",
+          "224.0.0.0/3",
+          "ddcc:5175:7234::/48",
+          "ff00::/8",
+          "fe80::/10"
         ],
+        "ip_is_private": true,
         "outbound": "direct"
       },
       {

@@ -647,8 +647,7 @@
         "outbound": "proxy"
       },
       {
-        "action": "resolve",
-        "server": "dns-remote"
+        "action": "resolve"
       },
       {
         "type": "logical",
@@ -663,10 +662,6 @@
         ],
         "invert": true,
         "outbound": "proxy"
-      },
-      {
-        "action": "resolve",
-        "server": "direct-dns-1"
       }
     ],
     "rule_set": [
