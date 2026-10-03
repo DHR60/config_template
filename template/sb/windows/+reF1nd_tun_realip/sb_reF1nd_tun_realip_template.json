@@ -532,8 +532,7 @@
       ],
       "mtu": 65535,
       "auto_route": true,
-      "strict_route": true,
-      "stack": "mixed"
+      "strict_route": true
     }
   ],
   "outbounds": [],

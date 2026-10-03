@@ -502,7 +502,6 @@
         }
       },
       "mtu": 65535,
-      "stack": "mixed",
       "tag": "tun-in",
       "type": "tun"
     },
