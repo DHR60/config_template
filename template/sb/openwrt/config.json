@@ -313,6 +313,18 @@
           "fe80::/10"
         ],
         "ip_is_private": true,
+        "preferred_by": "bridge-lan",
+        "outbound": "bridge-lan"
+      },
+      {
+        "ip_cidr": [
+          "192.168.0.0/16",
+          "224.0.0.0/3",
+          "ddcc:5175:7234::/48",
+          "ff00::/8",
+          "fe80::/10"
+        ],
+        "ip_is_private": true,
         "outbound": "direct"
       },
       {
@@ -353,6 +365,209 @@
         "outbound": "proxy"
       },
       {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "preferred_by": "bridge-wan"
+          },
+          {
+            "rule_set": [
+              "geoip-cn"
+            ]
+          },
+          {
+            "rule_set": [
+              "geoip-google"
+            ],
+            "invert": true
+          }
+        ],
+        "outbound": "bridge-wan"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": [
+              "tun-in"
+            ]
+          },
+          {
+            "rule_set": "geosite-private",
+            "domain_suffix": [
+              "4.3.2.7.5.7.1.5.c.c.d.d.ip6.arpa",
+              "cycani.org",
+              "senhewenhua.com",
+              "cnmdm.top",
+              "akamaized.net",
+              "moedot.net",
+              "xifanacg.com",
+              "skland.com",
+              "aliyun.com",
+              "online-fix.me"
+            ]
+          }
+        ],
+        "action": "resolve"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "preferred_by": "bridge-wan"
+          },
+          {
+            "inbound": [
+              "tun-in"
+            ]
+          },
+          {
+            "rule_set": [
+              "geoip-cn"
+            ]
+          },
+          {
+            "rule_set": "geosite-private",
+            "domain_suffix": [
+              "4.3.2.7.5.7.1.5.c.c.d.d.ip6.arpa",
+              "cycani.org",
+              "senhewenhua.com",
+              "cnmdm.top",
+              "akamaized.net",
+              "moedot.net",
+              "xifanacg.com",
+              "skland.com",
+              "aliyun.com",
+              "online-fix.me"
+            ]
+          }
+        ],
+        "outbound": "bridge-wan"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": [
+              "tun-in"
+            ]
+          },
+          {
+            "clash_mode": "GameDirect"
+          },
+          {
+            "rule_set": [
+              "geosite-category-games"
+            ],
+            "domain_keyword": [
+              "epic",
+              "steam"
+            ]
+          }
+        ],
+        "action": "resolve"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "preferred_by": "bridge-wan"
+          },
+          {
+            "inbound": [
+              "tun-in"
+            ]
+          },
+          {
+            "rule_set": [
+              "geoip-cn"
+            ]
+          },
+          {
+            "clash_mode": "GameDirect"
+          },
+          {
+            "rule_set": [
+              "geosite-category-games"
+            ],
+            "domain_keyword": [
+              "epic",
+              "steam"
+            ]
+          }
+        ],
+        "outbound": "bridge-wan"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": [
+              "tun-in"
+            ]
+          },
+          {
+            "clash_mode": "FastMatch"
+          },
+          {
+            "rule_set": [
+              "geosite-cn"
+            ]
+          },
+          {
+            "rule_set": [
+              "geosite-google",
+              "geosite-bing",
+              "geosite-category-ads-all"
+            ],
+            "invert": true
+          }
+        ],
+        "action": "resolve"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "preferred_by": "bridge-wan"
+          },
+          {
+            "inbound": [
+              "tun-in"
+            ]
+          },
+          {
+            "rule_set": [
+              "geoip-cn"
+            ]
+          },
+          {
+            "clash_mode": "FastMatch"
+          },
+          {
+            "rule_set": [
+              "geosite-cn"
+            ]
+          },
+          {
+            "rule_set": [
+              "geosite-google",
+              "geosite-bing",
+              "geosite-category-ads-all"
+            ],
+            "invert": true
+          }
+        ],
+        "outbound": "bridge-wan"
+      },
+      {
         "action": "sniff",
         "sniffer": [
           "http",
@@ -362,13 +577,7 @@
         "timeout": "500ms"
       },
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "bittorrent"
-          }
-        ],
+        "protocol": "bittorrent",
         "outbound": "direct"
       },
       {
@@ -620,6 +829,15 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs",
         "path": "/etc/sing-box/srss/geosite-bing.srs",
+        "http_client": "proxy-client",
+        "update_interval": "72h0m0s"
+      },
+      {
+        "type": "remote",
+        "tag": "geoip-google",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs",
+        "path": "/etc/sing-box/srss/geoip-google.srs",
         "http_client": "proxy-client",
         "update_interval": "72h0m0s"
       }
